@@ -1,5 +1,5 @@
 {
-  "name": "@airwaste/design-system-mobile-showcase",
+  "name": "@mobolulu/design-system-mobile-showcase",
   "private": true,
   "version": "0.0.0",
   "main": "node_modules/expo/AppEntry.js",
@@ -10,7 +10,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@airwaste/design-system-mobile": "^0.1.3",
+    "@mobolulu/design-system-mobile": "^0.3.0",
     "expo": "~51.0.0",
     "react": "18.2.0",
     "react-native": "0.74.5",

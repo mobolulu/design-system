@@ -1,7 +1,7 @@
 {
-  "name": "@airwaste/design-system-mobile",
-  "version": "0.2.1",
-  "description": "AirWaste mobile design system — React Native theme + components for the Expo apps.",
+  "name": "@mobolulu/design-system-mobile",
+  "version": "0.3.0",
+  "description": "MOBOLULU mobile design system \u2014 React Native theme + components for the Expo apps.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "module": "dist/index.js",
@@ -13,20 +13,29 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json && cp src/theme.css dist/theme.css"
+    "build": "tsc -p tsconfig.json && cp src/theme.css dist/theme.css",
+    "test": "jest",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
   "peerDependencies": {
     "react": ">=18",
-    "react-native": ">=0.72"
+    "react-native": ">=0.72",
+    "react-native-svg": ">=14.1.0"
   },
   "devDependencies": {
+    "@react-native/babel-preset": "^0.74.89",
+    "@testing-library/react-native": "^12.9.0",
+    "@types/jest": "^29.5.14",
     "@types/react": "^18.3.0",
+    "jest": "^29.7.0",
     "react": "18.2.0",
     "react-native": "^0.74.0",
     "react-native-svg": "^14.1.0",
+    "react-test-renderer": "^18.2.0",
+    "tailwindcss": "^3.4.19",
     "typescript": "^5.4.0"
   },
   "dependencies": {

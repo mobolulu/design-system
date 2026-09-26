@@ -1,12 +1,12 @@
-import { airwastePreset } from '@airwaste/design-system-web/tailwind-preset';
+import { moboluluPreset } from '@mobolulu/design-system-web/tailwind-preset';
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  presets: [airwastePreset],
+  presets: [moboluluPreset],
   content: [
     './index.html',
     './src/**/*.{ts,tsx}',
     // include the published package so its class names are not purged
-    './node_modules/@airwaste/design-system-web/dist/**/*.js',
+    './node_modules/@mobolulu/design-system-web/dist/**/*.js',
   ],
 };

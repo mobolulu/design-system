@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 200" width="640" height="200" role="img" aria-label="AirWaste logo">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 200" width="640" height="200" role="img" aria-label="MOBOLULU logo">
   <defs>
     <linearGradient id="bodyGreenL" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#4ADE80"/>
@@ -35,8 +35,8 @@
   </g>
 
   <!-- Wordmark -->
-  <text x="184" y="132" font-family="'Inter', 'Segoe UI', Arial, sans-serif" font-weight="800" font-size="88" letter-spacing="-2">
-    <tspan fill="#15803D">Air</tspan><tspan fill="#22C55E">Waste</tspan>
+  <text x="184" y="132" font-family="'Inter', 'Segoe UI', Arial, sans-serif" font-weight="800" font-size="66" letter-spacing="0">
+    <tspan fill="#15803D">MOBOLULU</tspan>
   </text>
 
   <!-- Tagline -->

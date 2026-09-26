@@ -1,5 +1,5 @@
 # ============================================================================
-# AirWaste — build the mobile showcase on EAS and refresh the QR on Pages.
+# MOBOLULU — build the mobile showcase on EAS and refresh the QR on Pages.
 #
 # Triggers on pushes that touch the mobile design system (not the web gallery):
 #   - apps/mobile-showcase/**
@@ -44,7 +44,7 @@ jobs:
         with:
           node-version: "20"
           registry-url: "https://npm.pkg.github.com"
-          scope: "@airwaste"
+          scope: "@mobolulu"
 
       - name: Install mobile showcase deps
         working-directory: apps/mobile-showcase

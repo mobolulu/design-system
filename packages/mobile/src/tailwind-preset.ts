@@ -61,4 +61,4 @@ const preset: Partial<Config> = {
 };
 
 export default preset;
-export const airwastePreset = preset;
+export const moboluluPreset = preset;

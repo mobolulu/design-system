@@ -4,7 +4,9 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../lib/utils';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
-export type ButtonSize = 'sm' | 'md' | 'lg';
+// 'xl' is the glove target (XCUT-NFR-007): 56dp tall with larger text,
+// for the collector in the street and the gate operator (XCUT-NFR-008).
+export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
 
 const buttonVariants = cva(
   'flex-row items-center justify-center gap-2 rounded-md active:opacity-85 disabled:opacity-50',
@@ -20,6 +22,7 @@ const buttonVariants = cva(
         sm: 'h-9 px-3',
         md: 'h-10 px-4',
         lg: 'h-11 px-5',
+        xl: 'min-h-14 h-14 px-6',
       },
     },
     defaultVariants: {
@@ -41,6 +44,7 @@ const buttonTextVariants = cva('font-semibold', {
       sm: 'text-[13px]',
       md: 'text-sm',
       lg: 'text-base',
+      xl: 'text-lg',
     },
   },
   defaultVariants: {
