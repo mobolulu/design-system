@@ -1,6 +1,6 @@
 {
   "name": "@mobolulu/design-system-web",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "MOBOLULU web design system — Tailwind preset + React components for the admin dashboard.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -29,7 +29,6 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "tailwindcss": "^3.4.0",
-    "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.4.0"
   },
   "dependencies": {
@@ -43,6 +42,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.33.0",
-    "tailwind-merge": "^3.6.0"
+    "tailwind-merge": "^3.6.0",
+    "tailwindcss-animate": "^1.0.7"
   }
 }
