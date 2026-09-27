@@ -75,6 +75,36 @@ Available from both `@mobolulu/design-system-web` and
 `@mobolulu/design-system-mobile` (money and bag counts; the offline
 components are mobile-only).
 
+## Sign-in (one-time code)
+
+The OTP flow is implemented once here and reused by every app (MBLL-38,
+architecture §6 — code to Telegram/email, no passwords, no social OAuth):
+
+- `createOtpClient(post)` — the flow logic: documented paths, request
+  bodies, and the mapping of every documented failure (rate limits,
+  wrong code, expired code, dead code) onto an `OtpError` carrying
+  `retryAfterS` / `attemptsLeft` so the UI can react. The app supplies
+  a `post(path, body)` — typically a one-liner over its `apiFetch`.
+- `OtpSignIn` — the two-step screen: channel → identifier → code →
+  session. Stable `testID`s (`otp.identifier`, `otp.send-code`,
+  `otp.code`, `otp.verify`, …) so the same Maestro journey drives it in
+  every app.
+
+One Prism quirk: the mock ignores the spec's `servers.url` prefix, so it
+serves `/otp/request` at the root rather than `/api/v1/auth/otp/request`.
+Apps point at it with `EXPO_PUBLIC_AUTH_PREFIX=""` (default
+`/api/v1/auth`).
+
+```tsx
+import { createOtpClient, OtpSignIn } from '@mobolulu/design-system-mobile';
+
+const otpClient = createOtpClient((path, body) =>
+  apiFetch(`${AUTH_PREFIX}${path}`, { method: 'POST', body, auth: false }),
+);
+
+<OtpSignIn client={otpClient} onAuthed={(session) => storeSession(session)} />
+```
+
 ## Tests
 
 ```bash

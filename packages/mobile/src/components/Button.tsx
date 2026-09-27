@@ -62,6 +62,7 @@ export interface ButtonProps extends VariantProps<typeof buttonVariants> {
   textStyle?: object;
   className?: string;
   textClassName?: string;
+  testID?: string;
   children: React.ReactNode;
 }
 
@@ -76,9 +77,11 @@ export const Button: React.FC<ButtonProps> & { variants: typeof buttonVariants }
   textStyle,
   className,
   textClassName,
+  testID,
   children,
 }) => (
   <Pressable
+    testID={testID}
     role="button"
     disabled={disabled || loading}
     onPress={onPress}
