@@ -1,7 +1,7 @@
 {
   "name": "@mobolulu/design-system-mobile",
-  "version": "0.3.1",
-  "description": "MOBOLULU mobile design system \u2014 React Native theme + components for the Expo apps.",
+  "version": "0.3.2",
+  "description": "MOBOLULU mobile design system — React Native theme + components for the Expo apps.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "module": "dist/index.js",
