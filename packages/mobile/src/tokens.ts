@@ -1,13 +1,13 @@
-// Local copy of @airwaste/design-tokens.
+// Local copy of @mobolulu/design-tokens.
 // The mobile package is published to GHCR as a standalone artifact, but
 // design-tokens is an internal (private, unpublished) workspace package.
 // Inlining keeps the published package self-contained so consumers (and EAS
 // builds) don't need access to the private tokens package.
 
-// Brand palette extracted from the AirWaste logo/icon SVGs (assets/).
+// Brand palette extracted from the MOBOLULU logo/icon SVGs (assets/).
 export const brand = {
-  primary: '#15803D', // deep green (wordmark "Air", bin lid)
-  green: '#22C55E', // mid green (wordmark "Waste")
+  primary: '#15803D', // deep green (wordmark, bin lid)
+  green: '#22C55E', // mid green (gradient body)
   light: '#4ADE80', // light green (bin handle, gradient top)
   dark: '#166534', // very dark green (tagline "GO GREEN")
   white: '#FFFFFF',

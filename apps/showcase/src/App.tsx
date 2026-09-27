@@ -21,7 +21,7 @@ import {
   Logo,
   DataTable,
   type DataTableColumn,
-} from '@airwaste/design-system-web';
+} from '@mobolulu/design-system-web';
 
 const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
   <section className="mb-10">
@@ -115,7 +115,7 @@ function WebsiteView() {
 
       <Section title="Form controls">
         <VStack gap={4} className="max-w-sm">
-          <Input label="Email" placeholder="you@airwaste.io" defaultValue="collector@airwaste.io" />
+          <Input label="Email" placeholder="you@mobolulu.id" defaultValue="collector@mobolulu.id" />
           <TextArea label="Notes" placeholder="Add a note..." />
           <Select
             label="Category"
@@ -185,7 +185,7 @@ function MobileView() {
             </div>
             <p className="text-center text-sm text-neutral-600">
               Open <strong>Expo Go</strong> on your Android phone and scan this code to
-              launch the live AirWaste mobile design system.
+              launch the live MOBOLULU mobile design system.
             </p>
             <code className="rounded bg-neutral-100 px-2 py-1 text-xs text-neutral-600">{expoUrl}</code>
           </div>
@@ -212,7 +212,7 @@ function MobileView() {
           ))}
         </div>
         <p className="mt-4 text-sm text-neutral-500">
-          These are React Native components from <code>@airwaste/design-system-mobile</code>.
+          These are React Native components from <code>@mobolulu/design-system-mobile</code>.
           They render natively on your phone (React Native can't run inside a browser), which is
           why the live preview is delivered via the Expo QR above.
         </p>
@@ -230,8 +230,8 @@ export default function App() {
         <div className="flex items-center gap-4">
           <Logo height={44} />
           <div>
-            <h1 className="text-2xl font-extrabold text-brand-primary">AirWaste Design System</h1>
-            <p className="text-sm text-neutral-500">@airwaste/design-system-web · live component gallery</p>
+            <h1 className="text-2xl font-extrabold text-brand-primary">MOBOLULU Design System</h1>
+            <p className="text-sm text-neutral-500">@mobolulu/design-system-web · live component gallery</p>
           </div>
         </div>
         <nav className="flex gap-2">
@@ -247,7 +247,7 @@ export default function App() {
       {view === 'website' ? <WebsiteView /> : <MobileView />}
 
       <footer className="mt-12 border-t border-neutral-200 pt-6 text-sm text-neutral-400">
-        Built with @airwaste/design-system-web · brand tokens from the AirWaste logo.
+        Built with @mobolulu/design-system-web · brand tokens from the MOBOLULU logo.
       </footer>
     </div>
   );

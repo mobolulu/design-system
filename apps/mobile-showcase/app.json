@@ -1,11 +1,11 @@
 {
   "expo": {
     "owner": "airwaste",
-    "name": "AirWaste Design System (Mobile)",
+    "name": "MOBOLULU Design System (Mobile)",
     "slug": "airwaste-design-system-mobile",
     "version": "0.1.0",
     "orientation": "portrait",
-    "scheme": "airwaste-ds",
+    "scheme": "mobolulu-ds",
     "userInterfaceStyle": "light",
     "newArchEnabled": false,
     "splash": {
@@ -14,10 +14,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "io.airwaste.designsystem.mobile"
+      "bundleIdentifier": "id.mobolulu.designsystem.mobile"
     },
     "android": {
-      "package": "io.airwaste.designsystem.mobile",
+      "package": "id.mobolulu.designsystem.mobile",
       "adaptiveIcon": {
         "backgroundColor": "#15803D"
       }

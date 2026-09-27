@@ -1,8 +1,8 @@
 {
-  "name": "airwaste-design-system",
+  "name": "mobolulu-design-system",
   "version": "0.1.0",
   "private": true,
-  "description": "AirWaste design system — shared brand tokens + web (Tailwind) and mobile (RN) component libraries.",
+  "description": "MOBOLULU design system \u2014 shared brand tokens + web (Tailwind) and mobile (RN) component libraries.",
   "workspaces": [
     "packages/tokens",
     "packages/web",
@@ -10,7 +10,9 @@
   ],
   "scripts": {
     "build": "npm run build --workspaces --if-present",
-    "clean": "npm run clean --workspaces --if-present"
+    "clean": "npm run clean --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present"
   },
   "devDependencies": {
     "typescript": "^5.4.0"

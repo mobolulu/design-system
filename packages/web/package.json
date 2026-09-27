@@ -1,7 +1,7 @@
 {
-  "name": "@airwaste/design-system-web",
-  "version": "0.2.5",
-  "description": "AirWaste web design system — Tailwind preset + React components for the admin dashboard.",
+  "name": "@mobolulu/design-system-web",
+  "version": "0.3.0",
+  "description": "MOBOLULU web design system — Tailwind preset + React components for the admin dashboard.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "module": "dist/index.js",

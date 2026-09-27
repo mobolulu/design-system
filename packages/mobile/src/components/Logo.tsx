@@ -8,8 +8,8 @@ export interface LogoProps {
   title?: string;
 }
 
-// Inlined AirWaste brand SVG (canonical copy in assets/airwaste-logo.svg).
-export const Logo: React.FC<LogoProps> = ({ variant = 'full', size = 40, title = 'AirWaste' }) => {
+// Inlined MOBOLULU brand SVG (canonical copy in assets/mobolulu-logo.svg).
+export const Logo: React.FC<LogoProps> = ({ variant = 'full', size = 40, title = 'MOBOLULU' }) => {
   if (variant === 'icon') {
     return (
       <Svg height={size} width={size} viewBox="0 0 512 512" role="img" aria-label={title}>
@@ -40,7 +40,7 @@ export const Logo: React.FC<LogoProps> = ({ variant = 'full', size = 40, title =
     );
   }
 
-  // full wordmark — icon scaled on the left + "AirWaste" text + "GO GREEN" tagline
+  // full wordmark — icon scaled on the left + "MOBOLULU" text + "GO GREEN" tagline
   return (
     <Svg height={size * 2} width={size * 8} viewBox="0 0 640 200" role="img" aria-label={title}>
       <Defs>
@@ -68,9 +68,8 @@ export const Logo: React.FC<LogoProps> = ({ variant = 'full', size = 40, title =
           <Path d="M 262 240.4 L 264.3 226.4 L 248.7 235.4 Z" fill={theme.colors.brand.white} stroke="none" />
         </G>
       </G>
-      <SvgText x="184" y="132" fontSize="88" fontWeight="800" letterSpacing="-2">
-        <TSpan fill={theme.colors.brand.primary}>Air</TSpan>
-        <TSpan fill={theme.colors.brand.green}>Waste</TSpan>
+      <SvgText x="184" y="132" fontSize="66" fontWeight="800" letterSpacing="0">
+        <TSpan fill={theme.colors.brand.primary}>MOBOLULU</TSpan>
       </SvgText>
       <SvgText x="186" y="160" fontSize="19" fontWeight="700" letterSpacing="7" fill={theme.colors.brand.dark}>
         GO GREEN

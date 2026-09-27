@@ -1,4 +1,4 @@
-// Local copy of the status->tone mapping from @airwaste/design-tokens.
+// Local copy of the status->tone mapping from @mobolulu/design-tokens.
 // Inlined so the published web package is self-contained (tokens is internal /
 // not published). Keep in sync with packages/tokens/src/status.ts.
 

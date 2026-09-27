@@ -1,10 +1,10 @@
 # ============================================================================
-# AirWaste — publish design-system packages to GitHub Packages (GHCR npm)
+# MOBOLULU — publish design-system packages to GitHub Packages (GHCR npm)
 #
 # Triggered on version tags (vX.Y.Z). Builds all workspaces and publishes the
-# two public packages to https://npm.pkg.github.com (scoped @airwaste):
-#   - @airwaste/design-system-web
-#   - @airwaste/design-system-mobile
+# two public packages to https://npm.pkg.github.com (scoped @mobolulu):
+#   - @mobolulu/design-system-web
+#   - @mobolulu/design-system-mobile
 # (the `tokens` package is internal/private and is NOT published)
 #
 # Versioning: tag vX.Y.Z -> both packages published at X.Y.Z (unified version)
@@ -33,7 +33,7 @@ jobs:
         with:
           node-version: "20"
           registry-url: "https://npm.pkg.github.com"
-          scope: "@airwaste"
+          scope: "@mobolulu"
 
       - name: Install dependencies
         run: npm ci
@@ -49,15 +49,15 @@ jobs:
         run: |
           npm version "${{ steps.version.outputs.VERSION }}" \
             --allow-same-version --no-git-tag-version \
-            -w @airwaste/design-system-web \
-            -w @airwaste/design-system-mobile
+            -w @mobolulu/design-system-web \
+            -w @mobolulu/design-system-mobile
 
       - name: Publish web package
-        run: npm publish -w @airwaste/design-system-web
+        run: npm publish -w @mobolulu/design-system-web
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish mobile package
-        run: npm publish -w @airwaste/design-system-mobile
+        run: npm publish -w @mobolulu/design-system-mobile
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

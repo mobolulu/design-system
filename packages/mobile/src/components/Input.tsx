@@ -10,18 +10,20 @@ export interface InputProps {
   onChangeText?: (text: string) => void;
   placeholder?: string;
   secureTextEntry?: boolean;
-  keyboardType?: 'default' | 'email-address' | 'numeric' | 'phone-pad';
+  keyboardType?: 'default' | 'email-address' | 'numeric' | 'phone-pad' | 'number-pad';
   style?: object;
   inputStyle?: object;
   inputClassName?: string;
+  testID?: string;
 }
 
 export const Input = React.forwardRef<TextInput, InputProps>(
-  ({ label, error, hint, value, onChangeText, placeholder, secureTextEntry, keyboardType = 'default', style, inputStyle, inputClassName }, ref) => (
+  ({ label, error, hint, value, onChangeText, placeholder, secureTextEntry, keyboardType = 'default', style, inputStyle, inputClassName, testID }, ref) => (
     <View style={style}>
       {label && <Text className="text-[13px] font-medium text-foreground">{label}</Text>}
       <TextInput
         ref={ref}
+        testID={testID}
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}

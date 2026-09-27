@@ -1,5 +1,5 @@
 // Semantic status mapping used by StatusPill / Badge across web + mobile.
-// Keys mirror @airwaste/shared enums (UserStatus, OrderStatus, etc.).
+// Keys mirror @mobolulu/shared enums (UserStatus, OrderStatus, etc.).
 
 export type Tone = 'success' | 'warning' | 'error' | 'info' | 'neutral';
 

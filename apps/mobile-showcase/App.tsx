@@ -15,7 +15,7 @@ import {
   Alert,
   Logo,
   theme,
-} from '@airwaste/design-system-mobile';
+} from '@mobolulu/design-system-mobile';
 
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: theme.colors.neutral[50] },
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
 
 export default function App() {
   const [switchOn, setSwitchOn] = useState(true);
-  const [email, setEmail] = useState('collector@airwaste.io');
+  const [email, setEmail] = useState('collector@mobolulu.id');
 
   return (
     <View style={styles.screen}>
@@ -37,8 +37,8 @@ export default function App() {
         <View style={styles.titleRow}>
           <Logo variant="icon" size={40} />
           <View>
-            <Text style={styles.h1}>AirWaste Design System</Text>
-            <Text style={styles.subtitle}>@airwaste/design-system-mobile · live preview</Text>
+            <Text style={styles.h1}>MOBOLULU Design System</Text>
+            <Text style={styles.subtitle}>@mobolulu/design-system-mobile · live preview</Text>
           </View>
         </View>
 
@@ -77,7 +77,7 @@ export default function App() {
         <Card>
           <Text style={styles.sectionTitle}>Form</Text>
           <VStack gap={4}>
-            <Input label="Email" placeholder="you@airwaste.io" value={email} onChangeText={setEmail} />
+            <Input label="Email" placeholder="you@mobolulu.id" value={email} onChangeText={setEmail} />
             <Switch label="Available for dispatch" value={switchOn} onValueChange={setSwitchOn} />
           </VStack>
         </Card>
@@ -102,7 +102,7 @@ export default function App() {
         </Card>
 
         <Text style={[styles.subtitle, { textAlign: 'center', marginTop: 8 }]}>
-          Built with @airwaste/design-system-mobile
+          Built with @mobolulu/design-system-mobile
         </Text>
       </ScrollView>
     </View>

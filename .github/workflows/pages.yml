@@ -1,8 +1,8 @@
 # ============================================================================
-# AirWaste — deploy the component showcase to GitHub Pages.
+# MOBOLULU — deploy the component showcase to GitHub Pages.
 #
 # Builds apps/showcase (Vite + React + Tailwind, consuming the published
-# @airwaste/design-system-web from GHCR) and publishes dist/ to Pages.
+# @mobolulu/design-system-web from GHCR) and publishes dist/ to Pages.
 # ============================================================================
 name: deploy-pages
 
@@ -42,7 +42,7 @@ jobs:
         with:
           node-version: "20"
           registry-url: "https://npm.pkg.github.com"
-          scope: "@airwaste"
+          scope: "@mobolulu"
 
       - name: Install showcase deps
         working-directory: apps/showcase

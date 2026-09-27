@@ -1,9 +1,9 @@
-// Brand palette extracted from the AirWaste logo/icon SVGs (assets/).
+// Brand palette extracted from the MOBOLULU logo/icon SVGs (assets/).
 // Single source of truth — web + mobile both import from here.
 
 export const brand = {
-  primary: '#15803D', // deep green (wordmark "Air", bin lid)
-  green: '#22C55E', // mid green (wordmark "Waste")
+  primary: '#15803D', // deep green (wordmark, bin lid)
+  green: '#22C55E', // mid green (gradient body)
   light: '#4ADE80', // light green (bin handle, gradient top)
   dark: '#166534', // very dark green (tagline "GO GREEN")
   white: '#FFFFFF',
@@ -31,7 +31,7 @@ export const neutral = {
 } as const;
 
 // Maps backend UserStatus / UserRole to a display color.
-// Mirrors @airwaste/shared enums: ACTIVE, SUSPENDED, VERIFIED (UserStatus);
+// Mirrors @mobolulu/shared enums: ACTIVE, SUSPENDED, VERIFIED (UserStatus);
 // CLIENT, COLLECTOR, ADMIN (UserRole).
 export const userStatus = {
   ACTIVE: status.success,

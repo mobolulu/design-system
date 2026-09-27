@@ -39,7 +39,7 @@ const preset: Partial<Config> = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
-        // AirWaste status colors (custom)
+        // MOBOLULU status colors (custom)
         success: {
           DEFAULT: 'hsl(var(--success))',
           foreground: 'hsl(var(--success-foreground))',
@@ -103,4 +103,4 @@ const preset: Partial<Config> = {
 };
 
 export default preset;
-export const airwastePreset = preset;
+export const moboluluPreset = preset;

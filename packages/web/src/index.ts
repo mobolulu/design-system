@@ -1,3 +1,4 @@
+export * from './money';
 export * from './components/Button';
 export * from './components/Spinner';
 export * from './components/Card';
@@ -16,5 +17,5 @@ export * from './components/Alert';
 export * from './components/Modal';
 export * from './components/Logo';
 export * from './components/DataTable';
-export { airwastePreset } from './tailwind-preset';
-export { default as airwastePresetDefault } from './tailwind-preset';
+export { moboluluPreset } from './tailwind-preset';
+export { default as moboluluPresetDefault } from './tailwind-preset';

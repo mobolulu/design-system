@@ -11,9 +11,9 @@ export interface LogoProps {
   tone?: 'color' | 'light';
 }
 
-// Inlined AirWaste brand SVG (canonical copy in assets/airwaste-logo.svg).
+// Inlined MOBOLULU brand SVG (canonical copy in assets/mobolulu-logo.svg).
 // `full` renders the wordmark + icon; `icon` renders the bin/recycle mark only.
-export const Logo: React.FC<LogoProps> = ({ variant = 'full', height = 40, className, title = 'AirWaste', tone = 'color' }) => {
+export const Logo: React.FC<LogoProps> = ({ variant = 'full', height = 40, className, title = 'MOBOLULU', tone = 'color' }) => {
   // Unique per-instance gradient ids — duplicated ids across two rendered
   // Logos (e.g. hidden desktop sidebar + mobile drawer) make url(#…) resolve
   // to a display:none element and the mark falls back to black.
@@ -93,9 +93,8 @@ export const Logo: React.FC<LogoProps> = ({ variant = 'full', height = 40, class
           <path d="M 262 240.4 L 264.3 226.4 L 248.7 235.4 Z" fill="#FFFFFF" stroke="none" />
         </g>
       </g>
-      <text x="184" y="132" fontFamily="Inter, 'Segoe UI', Arial, sans-serif" fontWeight="800" fontSize="88" letterSpacing="-2">
-        <tspan fill={tone === 'light' ? '#FFFFFF' : '#15803D'}>Air</tspan>
-        <tspan fill={tone === 'light' ? '#4ADE80' : '#22C55E'}>Waste</tspan>
+      <text x="184" y="132" fontFamily="Inter, 'Segoe UI', Arial, sans-serif" fontWeight="800" fontSize="66" letterSpacing="0">
+        <tspan fill={tone === 'light' ? '#FFFFFF' : '#15803D'}>MOBOLULU</tspan>
       </text>
       <text x="186" y="160" fontFamily="Inter, 'Segoe UI', Arial, sans-serif" fontWeight="700" fontSize="19" letterSpacing="7" fill={tone === 'light' ? '#86EFAC' : '#166534'}>
         GO GREEN

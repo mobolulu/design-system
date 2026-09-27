@@ -1,5 +1,5 @@
 {
-  "name": "@airwaste/design-system-showcase",
+  "name": "@mobolulu/design-system-showcase",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@airwaste/design-system-web": "^0.1.2",
+    "@mobolulu/design-system-web": "^0.3.0",
     "qrcode.react": "^3.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
