@@ -11,6 +11,7 @@ import {
   Select,
   Checkbox,
   Radio,
+  RadioGroup,
   Switch,
   Avatar,
   Spinner,
@@ -70,6 +71,7 @@ function WebsiteView() {
   const [switchOn, setSwitchOn] = useState(true);
   const [checked, setChecked] = useState(true);
   const [radio, setRadio] = useState('a');
+  const [category, setCategory] = useState('kg');
 
   return (
     <div>
@@ -119,17 +121,20 @@ function WebsiteView() {
           <TextArea label="Notes" placeholder="Add a note..." />
           <Select
             label="Category"
-            defaultValue="kg"
+            value={category}
+            onValueChange={setCategory}
             options={[
               { label: 'Plastic (kg)', value: 'kg' },
               { label: 'Paper (kg)', value: 'paper' },
               { label: 'Glass (kg)', value: 'glass' },
             ]}
           />
-          <Checkbox label="Notify me on pickup" checked={checked} onChange={(e) => setChecked(e.target.checked)} />
-          <Radio label="Option A" name="r" checked={radio === 'a'} onChange={() => setRadio('a')} />
-          <Radio label="Option B" name="r" checked={radio === 'b'} onChange={() => setRadio('b')} />
-          <Switch label="Available for dispatch" checked={switchOn} onChange={(e) => setSwitchOn(e.target.checked)} />
+          <Checkbox label="Notify me on pickup" checked={checked} onCheckedChange={(c) => setChecked(c === true)} />
+          <RadioGroup label="Pickup priority" orientation="horizontal" value={radio} onValueChange={setRadio}>
+            <Radio value="a" label="Option A" />
+            <Radio value="b" label="Option B" />
+          </RadioGroup>
+          <Switch label="Available for dispatch" checked={switchOn} onCheckedChange={setSwitchOn} />
         </VStack>
       </Section>
 
