@@ -54,6 +54,24 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # MBLL-60: EXPO_TOKEN died silently once already (revoked server-side
+      # between 2026-08-21 and 2026-09-27; every run since fails at the first
+      # EAS call). Without this gate the failure is a bare "GraphQL request
+      # failed." plus a python traceback — nothing points at the token.
+      - name: Preflight - EXPO_TOKEN must authenticate
+        working-directory: apps/mobile-showcase
+        run: |
+          set +e
+          out=$(npx eas whoami 2>&1)
+          rc=$?
+          set -e
+          if [ "$rc" -ne 0 ]; then
+            echo "$out"
+            echo "::error::EXPO_TOKEN was rejected by Expo (see eas whoami output above). Rotate it: mint a fresh access token in the airwaste Expo account and run: gh secret set EXPO_TOKEN -R mobolulu/design-system"
+            exit 1
+          fi
+          echo "EAS authenticated as: $(echo "$out" | tail -n1)"
+
       - name: Trigger EAS preview build
         id: eas
         working-directory: apps/mobile-showcase
