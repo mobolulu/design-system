@@ -13,7 +13,9 @@ permissions:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # Pinned (MBLL-60): ubuntu-latest flips to Ubuntu 26 on 2026-10-19
+    # (actions/runner-images#14748) — pin the exact image, migrate deliberately.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
