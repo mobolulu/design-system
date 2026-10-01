@@ -51,5 +51,10 @@ export const Stack: React.FC<StackProps> = ({
   </View>
 );
 
-export const VStack = (props: StackProps) => <Stack {...props} direction="column" />;
-export const HStack = (props: StackProps) => <Stack {...props} direction="row" />;
+// Explicit annotations: with jsxImportSource "nativewind" the JSX result
+// type references the runtime's react types, which TypeScript cannot
+// name portably across the package boundary (TS2742).
+export const VStack: React.FC<StackProps> = (props) => (
+  <Stack {...props} direction="column" />
+);
+export const HStack: React.FC<StackProps> = (props) => <Stack {...props} direction="row" />;
