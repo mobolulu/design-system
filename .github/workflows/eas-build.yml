@@ -76,9 +76,33 @@ jobs:
         id: eas
         working-directory: apps/mobile-showcase
         run: |
-          BUILD_ID=$(npx eas build --platform android --profile preview \
-            --non-interactive --no-wait --json \
+          # MBLL-83: capture and check before parsing — piped straight into
+          # `python3 -c json.load`, an eas failure surfaces as a Python
+          # traceback that buries the actual error. stderr flows to the job
+          # log uncaptured; only the JSON on stdout goes into $out.
+          set +e
+          out=$(npx eas build --platform android --profile preview \
+            --non-interactive --no-wait --json)
+          rc=$?
+          set -e
+          if [ "$rc" -ne 0 ]; then
+            echo "::error::eas build exited $rc before queueing a build — see the eas output above."
+            exit 1
+          fi
+          if [ -z "$out" ]; then
+            echo "::error::eas build exited 0 but printed no JSON to stdout."
+            exit 1
+          fi
+          set +e
+          BUILD_ID=$(printf '%s' "$out" \
             | python3 -c "import sys,json;print(json.load(sys.stdin)[0]['id'])")
+          rc=$?
+          set -e
+          if [ "$rc" -ne 0 ] || [ -z "$BUILD_ID" ]; then
+            echo "$out"
+            echo "::error::could not read a build id from the eas build JSON (raw output above)."
+            exit 1
+          fi
           echo "build_id=$BUILD_ID" >> "$GITHUB_OUTPUT"
 
       - name: Wait for build to finish
@@ -86,15 +110,38 @@ jobs:
         working-directory: apps/mobile-showcase
         run: |
           BUILD_ID="${{ steps.eas.outputs.build_id }}"
+          STATUS=""
           for i in $(seq 1 60); do
-            STATUS=$(npx eas build:view "$BUILD_ID" --json \
+            # MBLL-83: same guard as the trigger step — check before parsing.
+            set +e
+            out=$(npx eas build:view "$BUILD_ID" --json)
+            rc=$?
+            set -e
+            if [ "$rc" -ne 0 ] || [ -z "$out" ]; then
+              echo "$out"
+              echo "::error::eas build:view failed (exit $rc) while polling build $BUILD_ID — see output above if any."
+              exit 1
+            fi
+            set +e
+            STATUS=$(printf '%s' "$out" \
               | python3 -c "import sys,json;print(json.load(sys.stdin)['status'])")
+            rc=$?
+            set -e
+            if [ "$rc" -ne 0 ] || [ -z "$STATUS" ]; then
+              echo "$out"
+              echo "::error::could not read the status from the eas build:view JSON for build $BUILD_ID (raw output above)."
+              exit 1
+            fi
             if [ "$STATUS" = "FINISHED" ] || [ "$STATUS" = "ERRORED" ] || [ "$STATUS" = "CANCELED" ]; then
-              echo "status=$STATUS" >> "$GITHUB_OUTPUT"
               break
             fi
             sleep 15
           done
+          if [ -z "$STATUS" ]; then
+            echo "::error::build $BUILD_ID did not reach a terminal status within 15 minutes of polling."
+            exit 1
+          fi
+          echo "status=$STATUS" >> "$GITHUB_OUTPUT"
 
       - name: Deploy Pages with new QR URL
         if: steps.wait.outputs.status == 'FINISHED'
