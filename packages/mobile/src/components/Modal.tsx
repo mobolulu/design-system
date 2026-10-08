@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal as RNModal, Pressable, Text, View } from 'react-native';
 import { cn } from '../lib/utils';
+import { elevation } from '../tokens';
 
 export interface ModalProps {
   open: boolean;
@@ -22,7 +23,7 @@ export const Modal: React.FC<ModalProps> = ({ open, onClose, title, footer, styl
     >
       <Pressable
         className={cn('rounded-lg bg-card p-4', className)}
-        style={[{ shadowColor: '#000', shadowOpacity: 0.18, shadowRadius: 30, elevation: 10 }, style]}
+        style={[elevation.overlay, style]}
         onPress={(e) => e.stopPropagation()}
       >
         {title && (

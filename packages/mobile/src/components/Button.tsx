@@ -1,7 +1,8 @@
 import React from 'react';
-import { ActivityIndicator, Pressable, Text } from 'react-native';
+import { ActivityIndicator, Text } from 'react-native';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../lib/utils';
+import { PressFeedback } from './PressFeedback';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 // 'xl' is the glove target (XCUT-NFR-007): 56dp tall with larger text,
@@ -9,7 +10,9 @@ export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
 
 const buttonVariants = cva(
-  'flex-row items-center justify-center gap-2 rounded-md active:opacity-85 disabled:opacity-50',
+  // Press feedback is a real scale/opacity tween (PressFeedback), not the
+  // instant `active:` class swap this used to be (MBLL-134).
+  'flex-row items-center justify-center gap-2 rounded-md disabled:opacity-50',
   {
     variants: {
       variant: {
@@ -80,7 +83,7 @@ export const Button: React.FC<ButtonProps> & { variants: typeof buttonVariants }
   testID,
   children,
 }) => (
-  <Pressable
+  <PressFeedback
     testID={testID}
     role="button"
     disabled={disabled || loading}
@@ -92,7 +95,7 @@ export const Button: React.FC<ButtonProps> & { variants: typeof buttonVariants }
     <Text className={cn(buttonTextVariants({ variant, size }), textClassName)} style={textStyle}>
       {children}
     </Text>
-  </Pressable>
+  </PressFeedback>
 );
 Button.displayName = 'Button';
 Button.variants = buttonVariants;
