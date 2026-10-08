@@ -7,12 +7,24 @@ on:
   push:
     branches: [master]
   pull_request:
+    # MBLL-152: `closed` lets this run share the concurrency group below
+    # with the opened/synchronize run it supersedes — starting it is what
+    # cancels a queued/in-progress run when the PR merges or closes.
+    types: [opened, synchronize, reopened, closed]
 
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
+    # MBLL-152: skip real work on the closed-event run above; starting it
+    # (same concurrency group) is what cancels a leftover queued/in-progress
+    # run for a merged or closed PR.
+    if: github.event.action != 'closed'
     # Pinned (MBLL-60): ubuntu-latest flips to Ubuntu 26 on 2026-10-19
     # (actions/runner-images#14748) — pin the exact image, migrate deliberately.
     runs-on: ubuntu-24.04
