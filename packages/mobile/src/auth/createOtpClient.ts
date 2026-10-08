@@ -8,7 +8,7 @@
 //     apiFetch(`${AUTH_PREFIX}${path}`, { method: 'POST', body, auth: false }),
 //   );
 //
-// Paths are relative to the auth base: /api/v1/auth through Kong, or the
+// Paths are relative to the auth base: /api/v1/auth through the edge, or the
 // Prism mock root (Prism ignores the servers.url prefix — see MBLL-38).
 
 import { OtpError } from './OtpError';
