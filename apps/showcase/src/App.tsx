@@ -22,6 +22,12 @@ import {
   Logo,
   DataTable,
   type DataTableColumn,
+  Text,
+  Skeleton,
+  SkeletonCard,
+  SkeletonList,
+  EmptyState,
+  Money,
 } from '@mobolulu/design-system-web';
 
 const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
@@ -136,6 +142,47 @@ function WebsiteView() {
           </RadioGroup>
           <Switch label="Available for dispatch" checked={switchOn} onCheckedChange={setSwitchOn} />
         </VStack>
+      </Section>
+
+      <Section title="Text">
+        <VStack gap={2}>
+          <Text as="h1" variant="display">Display</Text>
+          <Text as="h2" variant="title">Title</Text>
+          <Text as="h3" variant="heading">Heading</Text>
+          <Text as="p" variant="body">Body — the default role for ordinary copy.</Text>
+          <Text as="label" variant="label">Label</Text>
+          <Text variant="caption" tone="neutral">Caption, de-emphasised</Text>
+          <Text variant="mono">mono · ORD-2041</Text>
+          <Text variant="numeric">50.000 (tabular figures)</Text>
+        </VStack>
+      </Section>
+
+      <Section title="Money">
+        <VStack gap={2}>
+          <Money minor={50000} />
+          <Money minor={1250000} variant="title" />
+          <Money minor={12500} showPrefix={false} />
+          <Money minor={9000} tone="error" />
+        </VStack>
+      </Section>
+
+      <Section title="Skeleton (loading state)">
+        <VStack gap={4} className="max-w-sm">
+          <Skeleton width="60%" height={20} />
+          <SkeletonCard />
+          <SkeletonList count={3} />
+        </VStack>
+      </Section>
+
+      <Section title="EmptyState">
+        <Card className="max-w-sm">
+          <EmptyState
+            icon={<span className="text-3xl">📭</span>}
+            title="No orders yet"
+            description="New orders show up here as soon as a client books a pickup."
+            action={<Button size="sm">Create an order</Button>}
+          />
+        </Card>
       </Section>
 
       <Section title="Avatars & Spinners">
