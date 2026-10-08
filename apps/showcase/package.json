@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@mobolulu/design-system-web": "^0.3.0",
+    "@mobolulu/design-system-web": "^0.6.0",
     "qrcode.react": "^3.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
