@@ -1,9 +1,15 @@
-# ============================================================================
+# =============================================================================================================================
 # MOBOLULU — deploy the component showcase to GitHub Pages.
 #
-# Builds apps/showcase (Vite + React + Tailwind, consuming the published
-# @mobolulu/design-system-web from GHCR) and publishes dist/ to Pages.
-# ============================================================================
+# Builds apps/showcase (Vite + React + Tailwind) and publishes dist/ to Pages.
+#
+# apps/showcase is a root npm workspace (MBLL-159): it resolves
+# @mobolulu/design-system-web from packages/web in this checkout, not from
+# the registry, so an unreleased component is demoable/buildable the moment
+# it merges — no gap where the showcase can only build against whatever was
+# last published. That's also why packages/web has to be built before the
+# showcase step: npm workspaces link siblings by name, they don't build them.
+# ==========================================================================================================================
 name: deploy-pages
 
 on:
@@ -24,7 +30,6 @@ permissions:
   contents: read
   pages: write
   id-token: write
-  packages: read
 
 concurrency:
   group: pages
@@ -43,18 +48,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          registry-url: "https://npm.pkg.github.com"
-          scope: "@mobolulu"
+          cache: npm
 
-      - name: Install showcase deps
-        working-directory: apps/showcase
-        run: npm install
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build design-system-web
+        run: npm run build --workspace=packages/web
 
       - name: Build showcase
-        working-directory: apps/showcase
-        run: npm run build
+        run: npm run build --workspace=apps/showcase
         env:
           # Prefer the URL passed from the EAS build workflow (workflow_dispatch
           # input); fall back to the EXPO_PREVIEW_URL repo variable. When set,

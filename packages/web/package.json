@@ -1,6 +1,6 @@
 {
   "name": "@mobolulu/design-system-web",
-  "version": "0.3.2",
+  "version": "0.6.0",
   "description": "MOBOLULU web design system — Tailwind preset + React components for the admin dashboard.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

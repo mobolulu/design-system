@@ -6,7 +6,8 @@
   "workspaces": [
     "packages/tokens",
     "packages/web",
-    "packages/mobile"
+    "packages/mobile",
+    "apps/showcase"
   ],
   "scripts": {
     "build": "npm run build --workspaces --if-present",

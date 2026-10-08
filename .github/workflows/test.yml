@@ -39,6 +39,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # apps/showcase is a workspace (MBLL-159), so this also builds it against
+      # packages/web from source — the PR gate now fails on exactly the thing
+      # that broke master after #13 (showcase importing exports the registry
+      # package didn't have yet), instead of only discovering it post-merge.
       - name: Build workspaces
         run: npm run build --workspaces --if-present
 
