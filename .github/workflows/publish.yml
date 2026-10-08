@@ -21,6 +21,10 @@ permissions:
   contents: read
   packages: write
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   publish:
     # Pinned (MBLL-60): ubuntu-latest flips to Ubuntu 26 on 2026-10-19
