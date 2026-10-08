@@ -113,11 +113,84 @@ export const typography = {
   lineHeight,
 } as const;
 
-export const shadows = {
-  card: '0 1px 3px rgba(0,0,0,0.08)',
-  cardHover: '0 4px 12px rgba(0,0,0,0.10)',
-  floating: '0 10px 30px rgba(0,0,0,0.18)',
+// Native elevation tokens (v0.5, MBLL-134). The web `shadows` CSS strings in
+// `packages/tokens` cannot be consumed by React Native's StyleSheet — passed
+// into a `style` prop they are silently dropped, so every mobile surface sat
+// flat. These are plain style objects: `shadowColor`/`shadowOffset`/
+// `shadowOpacity`/`shadowRadius` for iOS, `elevation` for Android (which
+// ignores the iOS shadow props entirely). Values are tuned to the same
+// progression as the web tokens so the two platforms read as one brand.
+export interface ElevationStyle {
+  shadowColor: string;
+  shadowOffset: { width: number; height: number };
+  shadowOpacity: number;
+  shadowRadius: number;
+  elevation: number;
+}
+
+export const elevation = {
+  // No surface separation — the base background itself.
+  flat: {
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0,
+    shadowRadius: 0,
+    elevation: 0,
+  },
+  // Cards and other resting surfaces. Mirrors the web `card` shadow.
+  raised: {
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  // Sheets and modals sitting above the page.
+  overlay: {
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.12,
+    shadowRadius: 16,
+    elevation: 6,
+  },
+  // FABs and toasts — the highest resting surface. Mirrors the web `floating` shadow.
+  floating: {
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.18,
+    shadowRadius: 30,
+    elevation: 12,
+  },
+} as const satisfies Record<'flat' | 'raised' | 'overlay' | 'floating', ElevationStyle>;
+
+export type ElevationLevel = keyof typeof elevation;
+
+// Motion tokens (v0.5, MBLL-134). One place for duration/easing so nothing
+// is hand-tuned per screen. Easing curves are cubic-bezier control points,
+// consumable by `Easing.bezier(...)` from `react-native-reanimated` or RN's
+// own `Easing` module.
+export const motion = {
+  duration: {
+    instant: 0,
+    fast: 150,
+    base: 250,
+    slow: 400,
+  },
+  easing: {
+    standard: [0.4, 0, 0.2, 1],
+    decelerate: [0, 0, 0.2, 1],
+    accelerate: [0.4, 0, 1, 1],
+  },
+  // A gentle, non-bouncy spring for press/sheet motion.
+  spring: {
+    damping: 18,
+    mass: 1,
+    stiffness: 180,
+  },
 } as const;
+
+export type MotionDuration = keyof typeof motion.duration;
+export type MotionEasing = keyof typeof motion.easing;
 
 export type Tone = 'success' | 'warning' | 'error' | 'info' | 'neutral';
 
@@ -150,3 +223,39 @@ export const statusTone: Record<string, Tone> = {
 export function toneForStatus(status: string): Tone {
   return statusTone[status] ?? 'neutral';
 }
+
+// Typography roles (v0.5, MBLL-134). `fontSize` is a raw scale; screens were
+// hardcoding `fontSize`/`fontWeight` inline with no shared rhythm and no
+// letter-spacing. These are complete, semantic text styles — tight negative
+// tracking on the large sizes is most of what makes type read as designed
+// rather than default. `numeric` is for every money and count readout so
+// digits don't jitter as balances update (tabular figures).
+export interface TextRole {
+  fontSize: number;
+  fontWeight: '400' | '500' | '600' | '700' | '800';
+  lineHeight: number;
+  letterSpacing: number;
+  fontVariant?: ReadonlyArray<'tabular-nums'>;
+}
+
+export const textRoles: Record<
+  'display' | 'title' | 'heading' | 'body' | 'label' | 'caption' | 'mono' | 'numeric',
+  TextRole
+> = {
+  display: { fontSize: 34, fontWeight: '800', lineHeight: 40, letterSpacing: -0.5 },
+  title: { fontSize: 28, fontWeight: '800', lineHeight: 34, letterSpacing: -0.3 },
+  heading: { fontSize: 20, fontWeight: '700', lineHeight: 26, letterSpacing: -0.2 },
+  body: { fontSize: 16, fontWeight: '400', lineHeight: 24, letterSpacing: 0 },
+  label: { fontSize: 14, fontWeight: '600', lineHeight: 18, letterSpacing: 0.1 },
+  caption: { fontSize: 12, fontWeight: '500', lineHeight: 16, letterSpacing: 0.2 },
+  mono: { fontSize: 14, fontWeight: '500', lineHeight: 20, letterSpacing: 0 },
+  numeric: {
+    fontSize: 16,
+    fontWeight: '600',
+    lineHeight: 24,
+    letterSpacing: 0,
+    fontVariant: ['tabular-nums'],
+  },
+};
+
+export type TextRoleName = keyof typeof textRoles;
