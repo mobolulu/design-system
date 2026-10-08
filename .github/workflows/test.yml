@@ -1,1 +1,53 @@
-IyBNT0JPTFVMVSDigJQgbGludC90eXBlLWNoZWNrL3Rlc3QgZ2F0ZSBmb3IgdGhlIGRlc2lnbiBzeXN0ZW0gKE1CTEwtMzgpLgojIFJ1bnMgb24gZXZlcnkgUFIgYW5kIG9uIHB1c2hlcyB0byBtYXN0ZXIuIFB1Ymxpc2hpbmcgc3RheXMgdGFnLWRyaXZlbgojIChwdWJsaXNoLnltbCkuCm5hbWU6IHRlc3QKCm9uOgogIHB1c2g6CiAgICBicmFuY2hlczogW21hc3Rlcl0KICBwdWxsX3JlcXVlc3Q6CiAgICAjIE1CTEwtMTUyOiBgY2xvc2VkYCBsZXRzIHRoaXMgcnVuIHNoYXJlIHRoZSBjb25jdXJyZW5jeSBncm91cCBiZWxvdwogICAgIyB3aXRoIHRoZSBvcGVuZWQvc3luY2hyb25pemUgcnVuIGl0IHN1cGVyc2VkZXMg4oCUIHN0YXJ0aW5nIGl0IGlzIHdoYXQKICAgICMgY2FuY2VscyBhIHF1ZXVlZC9pbi1wcm9ncmVzcyBydW4gd2hlbiB0aGUgUFIgbWVyZ2VzIG9yIGNsb3Nlcy4KICAgIHR5cGVzOiBbb3BlbmVkLCBzeW5jaHJvbml6ZSwgcmVvcGVuZWQsIGNsb3NlZF0KCnBlcm1pc3Npb25zOgogIGNvbnRlbnRzOiByZWFkCgpjb25jdXJyZW5jeToKICBncm91cDogJHt7IGdpdGh1Yi53b3JrZmxvdyB9fS0ke3sgZ2l0aHViLnJlZiB9fQogIGNhbmNlbC1pbi1wcm9ncmVzczogdHJ1ZQoKam9iczoKICB0ZXN0OgogICAgIyBNQkxMLTE1Mjogc2tpcCByZWFsIHdvcmsgb24gdGhlIGNsb3NlZC1ldmVudCBydW4gYWJvdmU7IHN0YXJ0aW5nIGl0CiAgICAjIChzYW1lIGNvbmN1cnJlbmN5IGdyb3VwKSBpcyB3aGF0IGNhbmNlbHMgYSBsZWZ0b3ZlciBxdWV1ZWQvaW4tcHJvZ3Jlc3MKICAgICMgcnVuIGZvciBhIG1lcmdlZCBvciBjbG9zZWQgUFIuCiAgICBpZjogZ2l0aHViLmV2ZW50LmFjdGlvbiAhPSAnY2xvc2VkJwogICAgIyBQaW5uZWQgKE1CTEwtNjApOiB1YnVudHUtbGF0ZXN0IGZsaXBzIHRvIFVidW50dSAyNiBvbiAyMDI2LTEwLTE5CiAgICAjIChhY3Rpb25zL3J1bm5lci1pbWFnZXMjMTQ3NDgpIOKAlCBwaW4gdGhlIGV4YWN0IGltYWdlLCBtaWdyYXRlIGRlbGliZXJhdGVseS4KICAgIHJ1bnMtb246IHVidW50dS0yNC4wNAogICAgc3RlcHM6CiAgICAgIC0gdXNlczogYWN0aW9ucy9jaGVja291dEB2NAoKICAgICAgLSB1c2VzOiBhY3Rpb25zL3NldHVwLW5vZGVAdjQKICAgICAgICB3aXRoOgogICAgICAgICAgbm9kZS12ZXJzaW9uOiAiMjAiCiAgICAgICAgICBjYWNoZTogbnBtCgogICAgICAtIG5hbWU6IEluc3RhbGwgZGVwZW5kZW5jaWVzCiAgICAgICAgcnVuOiBucG0gY2kKCiAgICAgICMgYXBwcy9zaG93Y2FzZSBpcyBhIHdvcmtzcGFjZSAoTUJMTC0xNTkpLCBzbyB0aGlzIGFsc28gYnVpbGRzIGl0IGFnYWluc3QKICAgICAgIyBwYWNrYWdlcy93ZWIgZnJvbSBzb3VyY2Ug4oCUIHRoZSBQUiBnYXRlIG5vdyBmYWlscyBvbiBleGFjdGx5IHRoZSB0aGluZwogICAgICAjIHRoYXQgYnJva2UgbWFzdGVyIGFmdGVyICMxMyAoc2hvd2Nhc2UgaW1wb3J0aW5nIGV4cG9ydHMgdGhlIHJlZ2lzdHJ5CiAgICAgICMgcGFja2FnZSBkaWRuJ3QgaGF2ZSB5ZXQpLCBpbnN0ZWFkIG9mIG9ubHkgZGlzY292ZXJpbmcgaXQgcG9zdC1tZXJnZS4KICAgICAgLSBuYW1lOiBCdWlsZCB3b3Jrc3BhY2VzCiAgICAgICAgcnVuOiBucG0gcnVuIGJ1aWxkIC0td29ya3NwYWNlcyAtLWlmLXByZXNlbnQKCiAgICAgIC0gbmFtZTogVHlwZS1jaGVjawogICAgICAgIHJ1bjogbnBtIHJ1biB0eXBlY2hlY2sgLS13b3Jrc3BhY2VzIC0taWYtcHJlc2VudAoKICAgICAgLSBuYW1lOiBUZXN0CiAgICAgICAgcnVuOiBucG0gdGVzdCAtLXdvcmtzcGFjZXMgLS1pZi1wcmVzZW50Cg==
+# MOBOLULU — lint/type-check/test gate for the design system (MBLL-38).
+# Runs on every PR and on pushes to master. Publishing stays tag-driven
+# (publish.yml).
+name: test
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    # MBLL-152: `closed` lets this run share the concurrency group below
+    # with the opened/synchronize run it supersedes — starting it is what
+    # cancels a queued/in-progress run when the PR merges or closes.
+    types: [opened, synchronize, reopened, closed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    # MBLL-152: skip real work on the closed-event run above; starting it
+    # (same concurrency group) is what cancels a leftover queued/in-progress
+    # run for a merged or closed PR.
+    if: github.event.action != 'closed'
+    # Pinned (MBLL-60): ubuntu-latest flips to Ubuntu 26 on 2026-10-19
+    # (actions/runner-images#14748) — pin the exact image, migrate deliberately.
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # apps/showcase is a workspace (MBLL-159), so this also builds it against
+      # packages/web from source — the PR gate now fails on exactly the thing
+      # that broke master after #13 (showcase importing exports the registry
+      # package didn't have yet), instead of only discovering it post-merge.
+      - name: Build workspaces
+        run: npm run build --workspaces --if-present
+
+      - name: Type-check
+        run: npm run typecheck --workspaces --if-present
+
+      - name: Test
+        run: npm test --workspaces --if-present
