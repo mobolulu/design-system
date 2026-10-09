@@ -18,4 +18,11 @@ describe('Money', () => {
   it('throws on a fractional minor-unit amount, same as formatMinorUnits', () => {
     expect(() => render(<Money minor={50000.5} />)).toThrow();
   });
+
+  it('renders tabular figures even on a non-numeric variant', () => {
+    render(<Money minor={50000} variant="heading" />);
+    const amount = screen.getByText('50.000');
+    const flattenedStyle = [amount.props.style].flat();
+    expect(flattenedStyle.some((style) => style?.fontVariant?.includes('tabular-nums'))).toBe(true);
+  });
 });

@@ -50,7 +50,7 @@ export const Money: React.FC<MoneyProps> = ({
           Rp
         </Text>
       )}
-      <Text variant={variant} tone={tone} color={color}>
+      <Text variant={variant} tone={tone} color={color} style={{ fontVariant: ['tabular-nums'] }}>
         {formatMinorUnits(minor)}
       </Text>
     </View>
