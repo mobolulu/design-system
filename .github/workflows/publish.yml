@@ -21,8 +21,13 @@ permissions:
   contents: read
   packages: write
 
+# MBLL-169: defensive alignment with the event-aware key used fleet-wide —
+# this workflow has no pull_request trigger today, so
+# github.event.pull_request.number is always empty and behavior here is
+# unchanged; it just means a pull_request trigger added later can't
+# silently reopen the push-vs-closed race.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:

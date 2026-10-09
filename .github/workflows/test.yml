@@ -16,7 +16,12 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  # MBLL-169: a merged PR's `closed` event resolves github.ref to the base
+  # ref (the merge ref is gone), so it collides with master's own push run
+  # on github.ref alone. Keying on the PR number when one exists keeps a
+  # pull_request run's group stable across that disappearance and away from
+  # push's group regardless of event ordering.
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
