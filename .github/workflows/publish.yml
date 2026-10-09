@@ -1,1 +1,160 @@
-IyA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CiMgTU9CT0xVTFUg4oCUIHB1Ymxpc2ggZGVzaWduLXN5c3RlbSBwYWNrYWdlcyB0byBHaXRIdWIgUGFja2FnZXMgKEdIQ1IgbnBtKQojCiMgVHJpZ2dlcnMgb24gZXZlcnkgcHVzaCB0byBgbWFzdGVyYCAoaS5lLiBldmVyeSBtZXJnZSkg4oCUIG5vdCBvbiBhCiMgc2VwYXJhdGVseS1wdXNoZWQgdGFnLiAoTUJMTC0xODI6IHRoZSBvbGQgdGFnLXRyaWdnZXJlZCBmbG93IHJlcXVpcmVkCiMgc29tZW9uZSB0byByZW1lbWJlciBhIHNlY29uZCwgZGlzY29ubmVjdGVkIHN0ZXAgYWZ0ZXIgbWVyZ2luZyBhIHZlcnNpb24KIyBidW1wOyB0d2ljZSBub2JvZHkgZGlkLCBhbmQgb25jZSB0aGUgdmVyc2lvbiB3YXMgbmV2ZXIgYnVtcGVkIGF0IGFsbCwgc28KIyB0aGVyZSB3YXMgZ2VudWluZWx5IG5vdGhpbmcgdG8gcHVibGlzaC4pCiMKIyBgdG9rZW5zYCBpcyBpbnRlcm5hbC9wcml2YXRlIGFuZCBpcyBOT1QgcHVibGlzaGVkLiBgd2ViYCBhbmQgYG1vYmlsZWAgYXJlCiMgdmVyc2lvbmVkIGFuZCBwdWJsaXNoZWQgaW5kZXBlbmRlbnRseSAodGhlaXIgcGFja2FnZS5qc29uIHZlcnNpb25zIGFscmVhZHkKIyBkaXZlcmdlIOKAlCAwLjYueCB2cyAwLjUueCkgcmF0aGVyIHRoYW4gZm9yY2VkIHRvIGEgc2luZ2xlIHRhZy1kZXJpdmVkCiMgdmVyc2lvbi4KIwojIEZvciBlYWNoIHB1Ymxpc2hlZCBwYWNrYWdlOiBjb21wYXJlIGl0cyBwYWNrYWdlLmpzb24gdmVyc2lvbiBhZ2FpbnN0IHdoYXQKIyB0aGUgcmVnaXN0cnkgYWN0dWFsbHkgaGFzLiBBaGVhZCAtPiBidWlsZCwgcHVibGlzaCwgdGFnCiMgKDxwYWNrYWdlPi12PHZlcnNpb24+KS4gTm90IGFoZWFkIC0+IGxvdWQgbm8tb3AuIEVpdGhlciB3YXkgdGhlIHJ1biBlbmRzCiMgZ3JlZW4gd2l0aCBhbiB1bmFtYmlndW91cyBwZXItcGFja2FnZSBtZXNzYWdlIGluIHRoZSBzdGVwIHN1bW1hcnksIEVYQ0VQVDoKIyBpZiBhIHBhY2thZ2UncyB2ZXJzaW9uIGlzIGFoZWFkIG9mIHRoZSByZWdpc3RyeSBhbmQgdGhlIHB1Ymxpc2ggZGlkbid0CiMgbGFuZCwgIlZlcmlmeSBvdXRjb21lIiBmYWlscyB0aGF0IG1hdHJpeCBsZWcg4oCUIHJlZCwgbm90IGEgcXVpZXQgc2tpcC4KIwojIHdvcmtmbG93X2Rpc3BhdGNoIHJlbWFpbnMgZm9yIGEgbWFudWFsIHJlLXJ1biAoZS5nLiByZXRyeWluZyBhZnRlciBhCiMgdHJhbnNpZW50IHJlZ2lzdHJ5IGZhaWx1cmUpLgojID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KbmFtZTogcHVibGlzaC1kZXNpZ24tc3lzdGVtCgpvbjoKICBwdXNoOgogICAgYnJhbmNoZXM6IFsibWFzdGVyIl0KICB3b3JrZmxvd19kaXNwYXRjaDoKCnBlcm1pc3Npb25zOgogIGNvbnRlbnRzOiB3cml0ZQogIHBhY2thZ2VzOiB3cml0ZQoKY29uY3VycmVuY3k6CiAgZ3JvdXA6IHB1Ymxpc2gtZGVzaWduLXN5c3RlbQogIGNhbmNlbC1pbi1wcm9ncmVzczogZmFsc2UKCmpvYnM6CiAgcHVibGlzaDoKICAgIHN0cmF0ZWd5OgogICAgICBmYWlsLWZhc3Q6IGZhbHNlCiAgICAgIG1hdHJpeDoKICAgICAgICBwYWNrYWdlOgogICAgICAgICAgLSBuYW1lOiAiQG1vYm9sdWx1L2Rlc2lnbi1zeXN0ZW0td2ViIgogICAgICAgICAgICBwYXRoOiBwYWNrYWdlcy93ZWIKICAgICAgICAgIC0gbmFtZTogIkBtb2JvbHVsdS9kZXNpZ24tc3lzdGVtLW1vYmlsZSIKICAgICAgICAgICAgcGF0aDogcGFja2FnZXMvbW9iaWxlCiAgICAjIFBpbm5lZCAoTUJMTC02MCk6IHVidW50dS1sYXRlc3QgZmxpcHMgdG8gVWJ1bnR1IDI2IG9uIDIwMjYtMTAtMTkKICAgICMgKGFjdGlvbnMvcnVubmVyLWltYWdlcyMxNDc0OCkg4oCUIHBpbiB0aGUgZXhhY3QgaW1hZ2UsIG1pZ3JhdGUgZGVsaWJlcmF0ZWx5LgogICAgcnVucy1vbjogdWJ1bnR1LTI0LjA0CiAgICBzdGVwczoKICAgICAgLSBuYW1lOiBDaGVja291dAogICAgICAgIHVzZXM6IGFjdGlvbnMvY2hlY2tvdXRAdjQKICAgICAgICB3aXRoOgogICAgICAgICAgZmV0Y2gtZGVwdGg6IDAKCiAgICAgIC0gbmFtZTogU2V0IHVwIE5vZGUuanMKICAgICAgICB1c2VzOiBhY3Rpb25zL3NldHVwLW5vZGVAdjQKICAgICAgICB3aXRoOgogICAgICAgICAgbm9kZS12ZXJzaW9uOiAiMjAiCiAgICAgICAgICByZWdpc3RyeS11cmw6ICJodHRwczovL25wbS5wa2cuZ2l0aHViLmNvbSIKICAgICAgICAgIHNjb3BlOiAiQG1vYm9sdWx1IgoKICAgICAgLSBuYW1lOiBJbnN0YWxsIGRlcGVuZGVuY2llcwogICAgICAgIHJ1bjogbnBtIGNpCgogICAgICAtIG5hbWU6IENoZWNrIHB1Ymxpc2hlZCB2ZXJzaW9uIG9uIHRoZSByZWdpc3RyeQogICAgICAgIGlkOiBjaGVjawogICAgICAgIGVudjoKICAgICAgICAgIE5PREVfQVVUSF9UT0tFTjogJHt7IHNlY3JldHMuR0lUSFVCX1RPS0VOIH19CiAgICAgICAgICBQS0dfTkFNRTogJHt7IG1hdHJpeC5wYWNrYWdlLm5hbWUgfX0KICAgICAgICAgIFBLR19QQVRIOiAke3sgbWF0cml4LnBhY2thZ2UucGF0aCB9fQogICAgICAgIHJ1bjogfAogICAgICAgICAgTE9DQUxfVkVSU0lPTj0iJChub2RlIC1wICJyZXF1aXJlKCcuLyRQS0dfUEFUSC9wYWNrYWdlLmpzb24nKS52ZXJzaW9uIikiCiAgICAgICAgICBlY2hvICJsb2NhbF92ZXJzaW9uPSRMT0NBTF9WRVJTSU9OIiA+PiAiJEdJVEhVQl9PVVRQVVQiCgogICAgICAgICAgc2V0ICtlCiAgICAgICAgICBSRUdJU1RSWV9WRVJTSU9OPSIkKG5wbSB2aWV3ICIkUEtHX05BTUUiIHZlcnNpb24gMj4vdG1wL25wbS12aWV3LmVycikiCiAgICAgICAgICBTVEFUVVM9JD8KICAgICAgICAgIHNldCAtZQoKICAgICAgICAgIGlmIFsgJFNUQVRVUyAtbmUgMCBdOyB0aGVuCiAgICAgICAgICAgIGlmIGdyZXAgLXFpICI0MDQiIC90bXAvbnBtLXZpZXcuZXJyOyB0aGVuCiAgICAgICAgICAgICAgUkVHSVNUUllfVkVSU0lPTj0iIgogICAgICAgICAgICBlbHNlCiAgICAgICAgICAgICAgZWNobyAiOjplcnJvciB0aXRsZT0kUEtHX05BTUU6IHJlZ2lzdHJ5IGNoZWNrIGZhaWxlZDo6Y291bGQgbm90IHJlYWQgdGhlIGN1cnJlbnQgcHVibGlzaGVkIHZlcnNpb24gb2YgJFBLR19OQU1FIGZyb20gdGhlIHJlZ2lzdHJ5OiAkKGNhdCAvdG1wL25wbS12aWV3LmVycikiCiAgICAgICAgICAgICAgZXhpdCAxCiAgICAgICAgICAgIGZpCiAgICAgICAgICBmaQogICAgICAgICAgZWNobyAicmVnaXN0cnlfdmVyc2lvbj0ke1JFR0lTVFJZX1ZFUlNJT046LW5vbmV9IiA+PiAiJEdJVEhVQl9PVVRQVVQiCgogICAgICAgICAgaWYgWyAteiAiJFJFR0lTVFJZX1ZFUlNJT04iIF07IHRoZW4KICAgICAgICAgICAgQUhFQUQ9dHJ1ZQogICAgICAgICAgZWxpZiBbICIkUkVHSVNUUllfVkVSU0lPTiIgPSAiJExPQ0FMX1ZFUlNJT04iIF07IHRoZW4KICAgICAgICAgICAgQUhFQUQ9ZmFsc2UKICAgICAgICAgIGVsaWYgWyAiJChwcmludGYgJyVzXG4lc1xuJyAiJFJFR0lTVFJZX1ZFUlNJT04iICIkTE9DQUxfVkVSU0lPTiIgfCBzb3J0IC1WIHwgdGFpbCAtMSkiID0gIiRMT0NBTF9WRVJTSU9OIiBdOyB0aGVuCiAgICAgICAgICAgIEFIRUFEPXRydWUKICAgICAgICAgIGVsc2UKICAgICAgICAgICAgQUhFQUQ9ZmFsc2UKICAgICAgICAgIGZpCgogICAgICAgICAgaWYgWyAiJEFIRUFEIiA9ICJ0cnVlIiBdOyB0aGVuCiAgICAgICAgICAgIGVjaG8gInB1Ymxpc2g9dHJ1ZSIgPj4gIiRHSVRIVUJfT1VUUFVUIgogICAgICAgICAgICBlY2hvICIjIyAkUEtHX05BTUU6IFxgJExPQ0FMX1ZFUlNJT05cYCBpcyBhaGVhZCBvZiB0aGUgcmVnaXN0cnkgKFxgJHtSRUdJU1RSWV9WRVJTSU9OOi1ub25lfVxgKSDigJQgcHVibGlzaGluZyIgPj4gIiRHSVRIVUJfU1RFUF9TVU1NQVJZIgogICAgICAgICAgZWxzZQogICAgICAgICAgICBlY2hvICJwdWJsaXNoPWZhbHNlIiA+PiAiJEdJVEhVQl9PVVRQVVQiCiAgICAgICAgICAgIGVjaG8gIiMjICRQS0dfTkFNRTogbm8tb3Ag4oCUIFxgcGFja2FnZS5qc29uXGAgaXMgYXQgXGAkTE9DQUxfVkVSU0lPTlxgLCByZWdpc3RyeSBhbHJlYWR5IGhhcyBcYCRSRUdJU1RSWV9WRVJTSU9OXGAuIE5vdGhpbmcgcHVibGlzaGVkLiIgPj4gIiRHSVRIVUJfU1RFUF9TVU1NQVJZIgogICAgICAgICAgICBlY2hvICI6Om5vdGljZSB0aXRsZT0kUEtHX05BTUU6IG5vLW9wOjp2ZXJzaW9uIHVuY2hhbmdlZCAoJExPQ0FMX1ZFUlNJT04pLCBub3RoaW5nIHB1Ymxpc2hlZCIKICAgICAgICAgIGZpCgogICAgICAtIG5hbWU6IEJ1aWxkCiAgICAgICAgaWY6IHN0ZXBzLmNoZWNrLm91dHB1dHMucHVibGlzaCA9PSAndHJ1ZScKICAgICAgICBydW46IG5wbSBydW4gYnVpbGQgLS13b3Jrc3BhY2VzIC0taWYtcHJlc2VudAoKICAgICAgLSBuYW1lOiBQdWJsaXNoCiAgICAgICAgaWY6IHN0ZXBzLmNoZWNrLm91dHB1dHMucHVibGlzaCA9PSAndHJ1ZScKICAgICAgICBydW46IG5wbSBwdWJsaXNoIC13ICIke3sgbWF0cml4LnBhY2thZ2UubmFtZSB9fSIKICAgICAgICBlbnY6CiAgICAgICAgICBOT0RFX0FVVEhfVE9LRU46ICR7eyBzZWNyZXRzLkdJVEhVQl9UT0tFTiB9fQoKICAgICAgLSBuYW1lOiBUYWcgdGhlIHJlbGVhc2UKICAgICAgICBpZjogc3RlcHMuY2hlY2sub3V0cHV0cy5wdWJsaXNoID09ICd0cnVlJwogICAgICAgIGVudjoKICAgICAgICAgIFBLR19OQU1FOiAke3sgbWF0cml4LnBhY2thZ2UubmFtZSB9fQogICAgICAgIHJ1bjogfAogICAgICAgICAgVEFHPSIkKGJhc2VuYW1lICIkUEtHX05BTUUiKS12JHt7IHN0ZXBzLmNoZWNrLm91dHB1dHMubG9jYWxfdmVyc2lvbiB9fSIKICAgICAgICAgIGdpdCB0YWcgIiRUQUciCiAgICAgICAgICBnaXQgcHVzaCBvcmlnaW4gIiRUQUciCgogICAgICAtIG5hbWU6IFZlcmlmeSBvdXRjb21lCiAgICAgICAgaWY6IGFsd2F5cygpCiAgICAgICAgZW52OgogICAgICAgICAgTk9ERV9BVVRIX1RPS0VOOiAke3sgc2VjcmV0cy5HSVRIVUJfVE9LRU4gfX0KICAgICAgICAgIFBLR19OQU1FOiAke3sgbWF0cml4LnBhY2thZ2UubmFtZSB9fQogICAgICAgIHJ1bjogfAogICAgICAgICAgTE9DQUxfVkVSU0lPTj0iJHt7IHN0ZXBzLmNoZWNrLm91dHB1dHMubG9jYWxfdmVyc2lvbiB9fSIKCiAgICAgICAgICBpZiBbICIke3sgc3RlcHMuY2hlY2sub3V0cHV0cy5wdWJsaXNoIH19IiAhPSAidHJ1ZSIgXTsgdGhlbgogICAgICAgICAgICBlY2hvICIkUEtHX05BTUU6IHZlcnNpb24gdW5jaGFuZ2VkICgkTE9DQUxfVkVSU0lPTiksIG5vdGhpbmcgcHVibGlzaGVkIgogICAgICAgICAgICBleGl0IDAKICAgICAgICAgIGZpCgogICAgICAgICAgc2V0ICtlCiAgICAgICAgICBSRUdJU1RSWV9WRVJTSU9OPSIkKG5wbSB2aWV3ICIkUEtHX05BTUUiIHZlcnNpb24gMj4vdG1wL25wbS12aWV3LXZlcmlmeS5lcnIpIgogICAgICAgICAgU1RBVFVTPSQ/CiAgICAgICAgICBzZXQgLWUKCiAgICAgICAgICBpZiBbICRTVEFUVVMgLW5lIDAgXTsgdGhlbgogICAgICAgICAgICBlY2hvICI6OmVycm9yIHRpdGxlPSRQS0dfTkFNRTogc3RyYW5kZWQgcmVsZWFzZTo6cGFja2FnZS5qc29uIGlzIGF0ICRMT0NBTF9WRVJTSU9OIGFuZCBzaG91bGQgaGF2ZSBwdWJsaXNoZWQsIGJ1dCB0aGUgcG9zdC1wdWJsaXNoIHJlZ2lzdHJ5IGNoZWNrIGl0c2VsZiBmYWlsZWQ6ICQoY2F0IC90bXAvbnBtLXZpZXctdmVyaWZ5LmVycikiCiAgICAgICAgICAgIGV4aXQgMQogICAgICAgICAgZmkKCiAgICAgICAgICBpZiBbICIkUkVHSVNUUllfVkVSU0lPTiIgPSAiJExPQ0FMX1ZFUlNJT04iIF07IHRoZW4KICAgICAgICAgICAgZWNobyAiJFBLR19OQU1FOiB2ZXJzaW9uICRMT0NBTF9WRVJTSU9OIHB1Ymxpc2hlZCIKICAgICAgICAgIGVsc2UKICAgICAgICAgICAgZWNobyAiOjplcnJvciB0aXRsZT0kUEtHX05BTUU6IHN0cmFuZGVkIHJlbGVhc2U6OnBhY2thZ2UuanNvbiBpcyBhdCAkTE9DQUxfVkVSU0lPTiwgYWhlYWQgb2YgdGhlIHJlZ2lzdHJ5IChzYXcgJyRSRUdJU1RSWV9WRVJTSU9OJyksIGJ1dCBubyBwdWJsaXNoIGxhbmRlZC4gVGhpcyBpcyB0aGUgTUJMTC0xODIgZmFpbHVyZSBtb2RlIOKAlCBjaGVjayB0aGUgc3RlcHMgYWJvdmUuIgogICAgICAgICAgICBleGl0IDEKICAgICAgICAgIGZpCg==
+# ============================================================================
+# MOBOLULU — publish design-system packages to GitHub Packages (GHCR npm)
+#
+# Triggers on every push to `master` (i.e. every merge) — not on a
+# separately-pushed tag. (MBLL-182: the old tag-triggered flow required
+# someone to remember a second, disconnected step after merging a version
+# bump; twice nobody did, and once the version was never bumped at all, so
+# there was genuinely nothing to publish.)
+#
+# `tokens` is internal/private and is NOT published. `web` and `mobile` are
+# versioned and published independently (their package.json versions already
+# diverge — 0.6.x vs 0.5.x) rather than forced to a single tag-derived
+# version.
+#
+# For each published package: compare its package.json version against what
+# the registry actually has. Ahead -> build, publish, tag
+# (<package>-v<version>). Not ahead -> loud no-op. Either way the run ends
+# green with an unambiguous per-package message in the step summary, EXCEPT:
+# if a package's version is ahead of the registry and the publish didn't
+# land, "Verify outcome" fails that matrix leg — red, not a quiet skip.
+#
+# workflow_dispatch remains for a manual re-run (e.g. retrying after a
+# transient registry failure).
+# ============================================================================
+name: publish-design-system
+
+on:
+  push:
+    branches: ["master"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  packages: write
+
+concurrency:
+  group: publish-design-system
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - name: "@mobolulu/design-system-web"
+            path: packages/web
+          - name: "@mobolulu/design-system-mobile"
+            path: packages/mobile
+    # Pinned (MBLL-60): ubuntu-latest flips to Ubuntu 26 on 2026-10-19
+    # (actions/runner-images#14748) — pin the exact image, migrate deliberately.
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://npm.pkg.github.com"
+          scope: "@mobolulu"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check published version on the registry
+        id: check
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PKG_NAME: ${{ matrix.package.name }}
+          PKG_PATH: ${{ matrix.package.path }}
+        run: |
+          LOCAL_VERSION="$(node -p "require('./$PKG_PATH/package.json').version")"
+          echo "local_version=$LOCAL_VERSION" >> "$GITHUB_OUTPUT"
+
+          set +e
+          REGISTRY_VERSION="$(npm view "$PKG_NAME" version 2>/tmp/npm-view.err)"
+          STATUS=$?
+          set -e
+
+          if [ $STATUS -ne 0 ]; then
+            if grep -qi "404" /tmp/npm-view.err; then
+              REGISTRY_VERSION=""
+            else
+              echo "::error title=$PKG_NAME: registry check failed::could not read the current published version of $PKG_NAME from the registry: $(cat /tmp/npm-view.err)"
+              exit 1
+            fi
+          fi
+          echo "registry_version=${REGISTRY_VERSION:-none}" >> "$GITHUB_OUTPUT"
+
+          if [ -z "$REGISTRY_VERSION" ]; then
+            AHEAD=true
+          elif [ "$REGISTRY_VERSION" = "$LOCAL_VERSION" ]; then
+            AHEAD=false
+          elif [ "$(printf '%s\n%s\n' "$REGISTRY_VERSION" "$LOCAL_VERSION" | sort -V | tail -1)" = "$LOCAL_VERSION" ]; then
+            AHEAD=true
+          else
+            AHEAD=false
+          fi
+
+          if [ "$AHEAD" = "true" ]; then
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+            echo "## $PKG_NAME: \`$LOCAL_VERSION\` is ahead of the registry (\`${REGISTRY_VERSION:-none}\`) — publishing" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+            echo "## $PKG_NAME: no-op — \`package.json\` is at \`$LOCAL_VERSION\`, registry already has \`$REGISTRY_VERSION\`. Nothing published." >> "$GITHUB_STEP_SUMMARY"
+            echo "::notice title=$PKG_NAME: no-op::version unchanged ($LOCAL_VERSION), nothing published"
+          fi
+
+      - name: Build
+        if: steps.check.outputs.publish == 'true'
+        run: npm run build --workspaces --if-present
+
+      - name: Publish
+        if: steps.check.outputs.publish == 'true'
+        run: npm publish -w "${{ matrix.package.name }}"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Tag the release
+        if: steps.check.outputs.publish == 'true'
+        env:
+          PKG_NAME: ${{ matrix.package.name }}
+        run: |
+          TAG="$(basename "$PKG_NAME")-v${{ steps.check.outputs.local_version }}"
+          git tag "$TAG"
+          git push origin "$TAG"
+
+      - name: Verify outcome
+        if: always()
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PKG_NAME: ${{ matrix.package.name }}
+        run: |
+          LOCAL_VERSION="${{ steps.check.outputs.local_version }}"
+
+          if [ "${{ steps.check.outputs.publish }}" != "true" ]; then
+            echo "$PKG_NAME: version unchanged ($LOCAL_VERSION), nothing published"
+            exit 0
+          fi
+
+          set +e
+          REGISTRY_VERSION="$(npm view "$PKG_NAME" version 2>/tmp/npm-view-verify.err)"
+          STATUS=$?
+          set -e
+
+          if [ $STATUS -ne 0 ]; then
+            echo "::error title=$PKG_NAME: stranded release::package.json is at $LOCAL_VERSION and should have published, but the post-publish registry check itself failed: $(cat /tmp/npm-view-verify.err)"
+            exit 1
+          fi
+
+          if [ "$REGISTRY_VERSION" = "$LOCAL_VERSION" ]; then
+            echo "$PKG_NAME: version $LOCAL_VERSION published"
+          else
+            echo "::error title=$PKG_NAME: stranded release::package.json is at $LOCAL_VERSION, ahead of the registry (saw '$REGISTRY_VERSION'), but no publish landed. This is the MBLL-182 failure mode — check the steps above."
+            exit 1
+          fi
