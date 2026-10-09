@@ -9,8 +9,8 @@ describe('formatRupiah', () => {
     expect(formatRupiah(0)).toBe('Rp 0');
   });
 
-  it('keeps a negative sign in front (statements show deductions)', () => {
-    expect(formatRupiah(-1500)).toBe('Rp -1.500');
+  it('puts the sign outermost, not inside the Rp prefix (statements show deductions)', () => {
+    expect(formatRupiah(-1500)).toBe('-Rp 1.500');
   });
 
   it('refuses a fractional amount instead of rounding it', () => {
