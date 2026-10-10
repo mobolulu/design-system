@@ -14,7 +14,7 @@ function assertIntegerMinor(minor: number): void {
   }
 }
 
-/** Groups an integer with Indonesian dot separators: 50000 -> "50.000". */
+/** Groups an integer's digits with Indonesian dot separators: 50000 -> "50.000". Sign is the caller's job. */
 function groupIndonesian(value: number): string {
   const digits = Math.abs(value).toString();
   let grouped = '';
@@ -23,16 +23,23 @@ function groupIndonesian(value: number): string {
     grouped += digits[i];
     if (fromEnd > 1 && fromEnd % 3 === 1) grouped += '.';
   }
-  return value < 0 ? `-${grouped}` : grouped;
+  return grouped;
+}
+
+/** The sign of a minor-unit amount, as the character that goes in front of it (or ''). */
+function signOf(value: number): string {
+  return value < 0 ? '-' : '';
 }
 
 /**
  * Formats integer minor units of rupiah for display: `formatRupiah(50000)` →
- * `"Rp 50.000"`. Throws on non-integers — convert or fix the input instead.
+ * `"Rp 50.000"`. The sign sits outermost — `formatRupiah(-70)` → `"-Rp 70"` —
+ * matching Indonesian accounting convention and CLDR's `id` currency pattern.
+ * Throws on non-integers — convert or fix the input instead.
  */
 export function formatRupiah(minor: number): string {
   assertIntegerMinor(minor);
-  return `Rp ${groupIndonesian(minor)}`;
+  return `${signOf(minor)}Rp ${groupIndonesian(minor)}`;
 }
 
 /**
@@ -42,7 +49,7 @@ export function formatRupiah(minor: number): string {
  */
 export function formatMinorUnits(minor: number): string {
   assertIntegerMinor(minor);
-  return groupIndonesian(minor);
+  return `${signOf(minor)}${groupIndonesian(minor)}`;
 }
 
 /** A count of bags of the standard size (XCUT-BR-002). Never fractional. */
