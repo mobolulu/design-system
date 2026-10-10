@@ -1,43 +1,60 @@
 # ============================================================================
 # MOBOLULU — publish design-system packages to GitHub Packages (GHCR npm)
 #
-# Triggered on version tags (vX.Y.Z). Builds all workspaces and publishes the
-# two public packages to https://npm.pkg.github.com (scoped @mobolulu):
-#   - @mobolulu/design-system-web
-#   - @mobolulu/design-system-mobile
-# (the `tokens` package is internal/private and is NOT published)
+# Triggers on every push to `master` (i.e. every merge) — not on a
+# separately-pushed tag. (MBLL-182: the old tag-triggered flow required
+# someone to remember a second, disconnected step after merging a version
+# bump; twice nobody did, and once the version was never bumped at all, so
+# there was genuinely nothing to publish.)
 #
-# Versioning: tag vX.Y.Z -> both packages published at X.Y.Z (unified version)
+# `tokens` is internal/private and is NOT published. `web` and `mobile` are
+# versioned and published independently (their package.json versions already
+# diverge — 0.6.x vs 0.5.x) rather than forced to a single tag-derived
+# version.
+#
+# For each published package: compare its package.json version against what
+# the registry actually has. Ahead -> build, publish, tag
+# (<package>-v<version>). Not ahead -> loud no-op. Either way the run ends
+# green with an unambiguous per-package message in the step summary, EXCEPT:
+# if a package's version is ahead of the registry and the publish didn't
+# land, "Verify outcome" fails that matrix leg — red, not a quiet skip.
+#
+# workflow_dispatch remains for a manual re-run (e.g. retrying after a
+# transient registry failure).
 # ============================================================================
 name: publish-design-system
 
 on:
   push:
-    tags:
-      - "v*"
+    branches: ["master"]
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   packages: write
 
-# MBLL-169: defensive alignment with the event-aware key used fleet-wide —
-# this workflow has no pull_request trigger today, so
-# github.event.pull_request.number is always empty and behavior here is
-# unchanged; it just means a pull_request trigger added later can't
-# silently reopen the push-vs-closed race.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  group: publish-design-system
+  cancel-in-progress: false
 
 jobs:
   publish:
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - name: "@mobolulu/design-system-web"
+            path: packages/web
+          - name: "@mobolulu/design-system-mobile"
+            path: packages/mobile
     # Pinned (MBLL-60): ubuntu-latest flips to Ubuntu 26 on 2026-10-19
     # (actions/runner-images#14748) — pin the exact image, migrate deliberately.
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -49,26 +66,95 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build all workspaces
+      - name: Check published version on the registry
+        id: check
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PKG_NAME: ${{ matrix.package.name }}
+          PKG_PATH: ${{ matrix.package.path }}
+        run: |
+          LOCAL_VERSION="$(node -p "require('./$PKG_PATH/package.json').version")"
+          echo "local_version=$LOCAL_VERSION" >> "$GITHUB_OUTPUT"
+
+          set +e
+          REGISTRY_VERSION="$(npm view "$PKG_NAME" version 2>/tmp/npm-view.err)"
+          STATUS=$?
+          set -e
+
+          if [ $STATUS -ne 0 ]; then
+            if grep -qi "404" /tmp/npm-view.err; then
+              REGISTRY_VERSION=""
+            else
+              echo "::error title=$PKG_NAME: registry check failed::could not read the current published version of $PKG_NAME from the registry: $(cat /tmp/npm-view.err)"
+              exit 1
+            fi
+          fi
+          echo "registry_version=${REGISTRY_VERSION:-none}" >> "$GITHUB_OUTPUT"
+
+          if [ -z "$REGISTRY_VERSION" ]; then
+            AHEAD=true
+          elif [ "$REGISTRY_VERSION" = "$LOCAL_VERSION" ]; then
+            AHEAD=false
+          elif [ "$(printf '%s\n%s\n' "$REGISTRY_VERSION" "$LOCAL_VERSION" | sort -V | tail -1)" = "$LOCAL_VERSION" ]; then
+            AHEAD=true
+          else
+            AHEAD=false
+          fi
+
+          if [ "$AHEAD" = "true" ]; then
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+            echo "## $PKG_NAME: \`$LOCAL_VERSION\` is ahead of the registry (\`${REGISTRY_VERSION:-none}\`) — publishing" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+            echo "## $PKG_NAME: no-op — \`package.json\` is at \`$LOCAL_VERSION\`, registry already has \`$REGISTRY_VERSION\`. Nothing published." >> "$GITHUB_STEP_SUMMARY"
+            echo "::notice title=$PKG_NAME: no-op::version unchanged ($LOCAL_VERSION), nothing published"
+          fi
+
+      - name: Build
+        if: steps.check.outputs.publish == 'true'
         run: npm run build --workspaces --if-present
 
-      - name: Derive version from tag
-        id: version
-        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+      - name: Publish
+        if: steps.check.outputs.publish == 'true'
+        run: npm publish -w "${{ matrix.package.name }}"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Sync package versions
+      - name: Tag the release
+        if: steps.check.outputs.publish == 'true'
+        env:
+          PKG_NAME: ${{ matrix.package.name }}
         run: |
-          npm version "${{ steps.version.outputs.VERSION }}" \
-            --allow-same-version --no-git-tag-version \
-            -w @mobolulu/design-system-web \
-            -w @mobolulu/design-system-mobile
+          TAG="$(basename "$PKG_NAME")-v${{ steps.check.outputs.local_version }}"
+          git tag "$TAG"
+          git push origin "$TAG"
 
-      - name: Publish web package
-        run: npm publish -w @mobolulu/design-system-web
+      - name: Verify outcome
+        if: always()
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PKG_NAME: ${{ matrix.package.name }}
+        run: |
+          LOCAL_VERSION="${{ steps.check.outputs.local_version }}"
 
-      - name: Publish mobile package
-        run: npm publish -w @mobolulu/design-system-mobile
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          if [ "${{ steps.check.outputs.publish }}" != "true" ]; then
+            echo "$PKG_NAME: version unchanged ($LOCAL_VERSION), nothing published"
+            exit 0
+          fi
+
+          set +e
+          REGISTRY_VERSION="$(npm view "$PKG_NAME" version 2>/tmp/npm-view-verify.err)"
+          STATUS=$?
+          set -e
+
+          if [ $STATUS -ne 0 ]; then
+            echo "::error title=$PKG_NAME: stranded release::package.json is at $LOCAL_VERSION and should have published, but the post-publish registry check itself failed: $(cat /tmp/npm-view-verify.err)"
+            exit 1
+          fi
+
+          if [ "$REGISTRY_VERSION" = "$LOCAL_VERSION" ]; then
+            echo "$PKG_NAME: version $LOCAL_VERSION published"
+          else
+            echo "::error title=$PKG_NAME: stranded release::package.json is at $LOCAL_VERSION, ahead of the registry (saw '$REGISTRY_VERSION'), but no publish landed. This is the MBLL-182 failure mode — check the steps above."
+            exit 1
+          fi
