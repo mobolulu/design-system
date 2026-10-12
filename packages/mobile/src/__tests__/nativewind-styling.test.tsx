@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text as RNText } from 'react-native';
-import { render, screen } from '@testing-library/react-native';
+import { fireEvent, render, screen } from '@testing-library/react-native';
 import { Button } from '../components/Button';
 import { Screen } from '../components/Screen';
 import { Skeleton } from '../components/Skeleton';
@@ -42,7 +42,27 @@ describe('className and style reach components that can apply them', () => {
     );
     const target = screen.getByTestId('row');
     expect(target.props.className).toBe('bg-card p-4');
-    expect(target.props.style).toEqual({ marginTop: 8 });
+    // The caller's style survives alongside the press-state style the
+    // component layers on top of it.
+    expect(flatten(target.props.style).marginTop).toBe(8);
+  });
+
+  it('applies press feedback on the press target itself, with no extra node', () => {
+    render(
+      <PressFeedback testID="row" className="bg-primary">
+        <RNText>Scan</RNText>
+      </PressFeedback>,
+    );
+    const target = screen.getByTestId('row');
+    // Unpressed: nothing layered on.
+    expect(flatten(target.props.style).opacity).toBeUndefined();
+
+    fireEvent(target, 'pressIn');
+    const pressedStyle = flatten(screen.getByTestId('row').props.style);
+    expect(pressedStyle.opacity).toBeLessThan(1);
+
+    fireEvent(target, 'pressOut');
+    expect(flatten(screen.getByTestId('row').props.style).opacity).toBeUndefined();
   });
 
   it('keeps the Screen title inside the page gutter', () => {
