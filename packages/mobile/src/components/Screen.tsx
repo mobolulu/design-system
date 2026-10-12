@@ -34,6 +34,26 @@ export interface ScreenProps {
  * everywhere makes thirteen screens look like one product instead of
  * thirteen slightly different ones.
  */
+/**
+ * Longest screen title that still fits one line at the `title` role.
+ *
+ * MBLL-186 rendered "Withdrawal destination" and it wrapped onto two lines,
+ * eating ~80dp before any content. The title was `display` — 34/800, which
+ * is sized for digits, and digits do not wrap. At 360dp wide minus the
+ * 2x16dp gutter there is ~328dp of line; a 22-character string wants ~425dp
+ * at 34/800 and ~350dp at 28/800, so dropping one step would not have
+ * fixed it. At 20/700 it wants ~250dp and fits with room.
+ *
+ * So the role, not the number, is the rule — see `textRoles` in tokens:
+ * `display` is for a single numeric hero, never a sentence. A screen title
+ * is `title` when it is short enough to stay on one line and `heading`
+ * otherwise, which is most of them.
+ *
+ * 14 is approximate on purpose (0.57em average advance at weight 800); it
+ * is a guard against wrapping, not a typographic constant.
+ */
+const SHORT_TITLE_MAX = 14;
+
 export const Screen: React.FC<ScreenProps> = ({
   title,
   banner,
@@ -65,7 +85,7 @@ export const Screen: React.FC<ScreenProps> = ({
     <>
       {title && (
         <AnimatedView style={[styles.largeTitle, largeTitleStyle]}>
-          <Text variant="display">{title}</Text>
+          <Text variant={title.length <= SHORT_TITLE_MAX ? 'title' : 'heading'}>{title}</Text>
         </AnimatedView>
       )}
       {banner && <View style={styles.banner}>{banner}</View>}

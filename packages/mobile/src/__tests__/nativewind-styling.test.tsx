@@ -94,6 +94,38 @@ describe('className and style reach components that can apply them', () => {
     expect(flat.backgroundColor).toBeTruthy();
   });
 
+  it('never puts a screen title on the display role, whatever its length', () => {
+    // MBLL-186: `display` is 34/800, sized for a numeric hero. "Withdrawal
+    // destination" on it wrapped onto two lines and ate ~80dp before any
+    // content. A screen title is `title` when short and `heading` when
+    // sentence-shaped; it is never `display`.
+    for (const t of ['Earnings', 'Withdrawal destination']) {
+      render(<Screen title={t}><RNText>body</RNText></Screen>);
+      for (const node of screen.getAllByText(t)) {
+        expect(flatten(node.props.style).fontSize).not.toBe(34);
+      }
+      screen.unmount();
+    }
+  });
+
+  it('keeps a short title large and drops a sentence-shaped one a step', () => {
+    render(<Screen title="Earnings"><RNText>body</RNText></Screen>);
+    const short = Math.max(
+      ...screen.getAllByText('Earnings').map((n) => Number(flatten(n.props.style).fontSize) || 0),
+    );
+    screen.unmount();
+
+    render(<Screen title="Withdrawal destination"><RNText>body</RNText></Screen>);
+    const long = Math.max(
+      ...screen.getAllByText('Withdrawal destination').map(
+        (n) => Number(flatten(n.props.style).fontSize) || 0,
+      ),
+    );
+
+    expect(short).toBe(28);
+    expect(long).toBe(20);
+  });
+
   it('pads a Card by default, not only when asked for a non-default number', () => {
     render(
       <Card testID="card">
