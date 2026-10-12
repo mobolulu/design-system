@@ -235,7 +235,9 @@ export function toneForStatus(status: string): Tone {
 //   display  34/800  a single numeric hero — a balance, an earnings total.
 //                    NEVER a sentence. It is sized for digits, and digits
 //                    do not wrap. `display` on a screen title is the bug.
-//   title    28/800  short screen titles, roughly <= 14 characters at 360dp.
+//   title    28/800  short screen titles — up to SHORT_TITLE_MAX characters,
+//                    which Screen derives from the narrowest device we
+//                    support (320dp). See the constant for the arithmetic.
 //   heading  20/700  sentence-shaped screen titles. Most of them.
 // Screen applies this itself; callers pass a string, not a role.
 export interface TextRole {

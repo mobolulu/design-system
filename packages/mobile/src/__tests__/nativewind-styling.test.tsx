@@ -126,6 +126,32 @@ describe('className and style reach components that can apply them', () => {
     expect(long).toBe(20);
   });
 
+  it('keeps a title that fits at 320dp on the larger role', () => {
+    // The constant moved from 14 to 19 once it was derived at the narrowest
+    // device we support rather than at the one the render lane uses
+    // (MBLL-186). "Pay your pickup" is 15 characters on a money screen and
+    // was dropping two steps with room to spare at every width we ship.
+    render(<Screen title="Pay your pickup"><RNText>body</RNText></Screen>);
+    const size = Math.max(
+      ...screen.getAllByText('Pay your pickup').map(
+        (n) => Number(flatten(n.props.style).fontSize) || 0,
+      ),
+    );
+    expect(size).toBe(28);
+  });
+
+  it('still demotes a title that would wrap at 320dp', () => {
+    // 21 characters: fits the 328dp the lane renders at, wraps the 288dp a
+    // 320dp device leaves. The floor is what the constant is derived at.
+    render(<Screen title="Choose your collector"><RNText>body</RNText></Screen>);
+    const size = Math.max(
+      ...screen.getAllByText('Choose your collector').map(
+        (n) => Number(flatten(n.props.style).fontSize) || 0,
+      ),
+    );
+    expect(size).toBe(20);
+  });
+
   it('pads a Card by default, not only when asked for a non-default number', () => {
     render(
       <Card testID="card">

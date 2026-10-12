@@ -37,22 +37,32 @@ export interface ScreenProps {
 /**
  * Longest screen title that still fits one line at the `title` role.
  *
- * MBLL-186 rendered "Withdrawal destination" and it wrapped onto two lines,
- * eating ~80dp before any content. The title was `display` — 34/800, which
- * is sized for digits, and digits do not wrap. At 360dp wide minus the
- * 2x16dp gutter there is ~328dp of line; a 22-character string wants ~425dp
- * at 34/800 and ~350dp at 28/800, so dropping one step would not have
- * fixed it. At 20/700 it wants ~250dp and fits with room.
+ * Derived, not chosen. MBLL-186 measured five titles off real renders at
+ * `display` 34/800 and got 0.45–0.50 em per character (`My account` is the
+ * widest at 0.5015; `Recurring pickups` came out at 266.0dp against a 266dp
+ * prediction, so the model holds). 0.52 is used below as the conservative
+ * bound above every sample.
  *
- * So the role, not the number, is the rule — see `textRoles` in tokens:
- * `display` is for a single numeric hero, never a sentence. A screen title
- * is `title` when it is short enough to stay on one line and `heading`
- * otherwise, which is most of them.
+ * The width it is derived at is the decision, and it had never been made:
+ * **the narrowest device these apps support is 320dp.** That is Android's
+ * smallest common width bucket (`sw320dp`), and it leaves 288dp of content
+ * inside Screen's 16dp gutters. At `title` 28/800:
  *
- * 14 is approximate on purpose (0.57em average advance at weight 800); it
- * is a guard against wrapping, not a typographic constant.
+ *     288dp / (28 * 0.52 em) = 19.8 characters
+ *
+ * Hence 19. On the 360dp mid-range device the lane renders at there is
+ * 328dp of content and the break-even is ~22, so 19 demotes two titles
+ * ("Choose your collector", "Withdrawal destination") that would have fit
+ * there. That is the price of the 320dp floor, and it is the right way
+ * round: a title one step smaller reads fine, a wrapped one does not.
+ *
+ * It is still a character count rather than a measured width, so an
+ * unusually wide 19-character title can still wrap. Fixing that properly
+ * means measuring the rendered title against the real content width and
+ * demoting on overflow — a change to Screen rather than to a number, and
+ * worth doing if this constant ever has to move again.
  */
-const SHORT_TITLE_MAX = 14;
+const SHORT_TITLE_MAX = 19;
 
 export const Screen: React.FC<ScreenProps> = ({
   title,
