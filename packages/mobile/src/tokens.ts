@@ -230,6 +230,14 @@ export function toneForStatus(status: string): Tone {
 // tracking on the large sizes is most of what makes type read as designed
 // rather than default. `numeric` is for every money and count readout so
 // digits don't jitter as balances update (tabular figures).
+//
+// Which role a screen title takes (MBLL-186, ruled after the renders):
+//   display  34/800  a single numeric hero — a balance, an earnings total.
+//                    NEVER a sentence. It is sized for digits, and digits
+//                    do not wrap. `display` on a screen title is the bug.
+//   title    28/800  short screen titles, roughly <= 14 characters at 360dp.
+//   heading  20/700  sentence-shaped screen titles. Most of them.
+// Screen applies this itself; callers pass a string, not a role.
 export interface TextRole {
   fontSize: number;
   fontWeight: '400' | '500' | '600' | '700' | '800';
