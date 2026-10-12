@@ -18,6 +18,7 @@ export * from './components/Stack';
 export * from './components/Alert';
 export * from './components/Modal';
 export * from './components/Logo';
+export * from './components/Icon';
 export * from './components/OfflineBanner';
 export * from './components/PendingSyncBadge';
 export * from './components/OtpSignIn';

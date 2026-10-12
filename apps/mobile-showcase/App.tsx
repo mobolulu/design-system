@@ -14,6 +14,8 @@ import {
   HStack,
   Alert,
   Logo,
+  Icon,
+  ICON_NAMES,
   Screen,
   Text,
   Skeleton,
@@ -33,6 +35,9 @@ const styles = StyleSheet.create({
   sectionTitle: { marginBottom: 8 },
   sectionHeaderRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 },
   wrap: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
+  iconRow: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 16 },
+  iconCell: { alignItems: 'center', gap: 4, width: 64 },
+  iconNote: { marginTop: 12, marginBottom: 8 },
   elevationRow: { flexDirection: 'row', gap: 16 },
   elevationSwatch: {
     width: 72,
@@ -253,6 +258,29 @@ export default function App() {
           </Alert>
           <Alert tone="info">Dispatch started.</Alert>
         </VStack>
+      </Card>
+
+      <Card>
+        <Text variant="heading" style={styles.sectionTitle}>
+          Icons
+        </Text>
+        <View style={styles.iconRow}>
+          {ICON_NAMES.map((name) => (
+            <View key={name} style={styles.iconCell}>
+              <Icon name={name} size={28} color={theme.colors.neutral[700]} />
+              <Text variant="caption" tone="neutral">
+                {name}
+              </Text>
+            </View>
+          ))}
+        </View>
+        <Text variant="caption" tone="neutral" style={styles.iconNote}>
+          Active / inactive tint, as a tab bar passes it:
+        </Text>
+        <View style={styles.iconRow}>
+          <Icon name="home" size={24} color={theme.colors.brand.primary} strokeWidth={2.1} />
+          <Icon name="home" size={24} color={theme.colors.neutral[400]} />
+        </View>
       </Card>
 
       <Card>
