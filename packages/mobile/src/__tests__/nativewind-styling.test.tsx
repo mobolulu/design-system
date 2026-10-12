@@ -2,6 +2,7 @@ import React from 'react';
 import { Text as RNText } from 'react-native';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import { Button } from '../components/Button';
+import { Card } from '../components/Card';
 import { Screen } from '../components/Screen';
 import { Skeleton } from '../components/Skeleton';
 import { PressFeedback } from '../components/PressFeedback';
@@ -91,6 +92,36 @@ describe('className and style reach components that can apply them', () => {
     // A skeleton with no fill is an invisible one, so the colour is a token
     // rather than a class the animated component may never resolve.
     expect(flat.backgroundColor).toBeTruthy();
+  });
+
+  it('pads a Card by default, not only when asked for a non-default number', () => {
+    render(
+      <Card testID="card">
+        <RNText>body</RNText>
+      </Card>,
+    );
+    // The default was skipped — `padding !== 16 ? { padding } : undefined` —
+    // and no className carries a padding utility, so every card in all three
+    // apps rendered its contents flush against its own border (MBLL-186).
+    expect(flatten(screen.getByTestId('card').props.style).padding).toBe(16);
+  });
+
+  it('still honours an explicit padding, including zero', () => {
+    render(
+      <Card testID="tight" padding={0}>
+        <RNText>body</RNText>
+      </Card>,
+    );
+    expect(flatten(screen.getByTestId('tight').props.style).padding).toBe(0);
+  });
+
+  it('lets a caller override the padding through style, which comes last', () => {
+    render(
+      <Card testID="wide" style={{ padding: 24 }}>
+        <RNText>body</RNText>
+      </Card>,
+    );
+    expect(flatten(screen.getByTestId('wide').props.style).padding).toBe(24);
   });
 });
 
