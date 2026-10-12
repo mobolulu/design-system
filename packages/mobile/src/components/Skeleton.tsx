@@ -9,7 +9,7 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import { cn } from '../lib/utils';
-import { motion, radii } from '../tokens';
+import { colors, motion, radii } from '../tokens';
 import { useMotionDuration } from '../lib/useMotionDuration';
 import { AnimatedView } from '../lib/animated';
 
@@ -61,10 +61,18 @@ export const Skeleton: React.FC<SkeletonProps> = ({
   const animatedStyle = useAnimatedStyle(() => ({ opacity: opacity.value }));
 
   return (
+    // The fill is a token, not `bg-muted`. This component's width, height
+    // and radius travel in `style`, and the cssInterop registration that
+    // used to make `className` work here took `style` over and dropped them
+    // — a skeleton with no geometry is an invisible one (lib/animated.ts).
     <AnimatedView
       testID={testID}
-      className={cn('bg-muted', className)}
-      style={[{ width, height, borderRadius: radii[radius] }, animatedStyle, style]}
+      className={className}
+      style={[
+        { backgroundColor: colors.neutral[200], width, height, borderRadius: radii[radius] },
+        animatedStyle,
+        style,
+      ]}
     />
   );
 };

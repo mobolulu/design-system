@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
-import { type GestureResponderEvent, type PressableProps, type View } from 'react-native';
+import { Pressable, type GestureResponderEvent, type PressableProps, type View } from 'react-native';
 import { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { motion } from '../tokens';
 import { useMotionDuration } from '../lib/useMotionDuration';
-import { AnimatedPressable } from '../lib/animated';
+import { AnimatedView } from '../lib/animated';
 
 export interface PressFeedbackProps extends Omit<PressableProps, 'style'> {
   style?: object;
@@ -57,17 +57,29 @@ export const PressFeedback = React.forwardRef<View, PressFeedbackProps>(
       [onPressOut, pressed, duration],
     );
 
+    // `className` goes on the plain `Pressable`, which NativeWind styles
+    // natively; the animated wrapper carries nothing but the tween. It used
+    // to go on an `AnimatedPressable` with a cssInterop registration, and
+    // the classes never arrived — see lib/animated.ts. A Button's
+    // background, height and padding all live in that className, so the
+    // whole control was rendering unstyled with a white label on a white
+    // card (MBLL-186).
+    //
+    // The wrapper stretches with its parent the way the Pressable used to,
+    // so `fullWidth`'s `self-stretch w-full` still has the same effect.
     return (
-      <AnimatedPressable
-        ref={ref}
-        className={className}
-        style={[style, animatedStyle]}
-        onPressIn={handlePressIn}
-        onPressOut={handlePressOut}
-        {...pressableProps}
-      >
-        {children}
-      </AnimatedPressable>
+      <AnimatedView style={animatedStyle}>
+        <Pressable
+          ref={ref}
+          className={className}
+          style={style}
+          onPressIn={handlePressIn}
+          onPressOut={handlePressOut}
+          {...pressableProps}
+        >
+          {children}
+        </Pressable>
+      </AnimatedView>
     );
   },
 );
