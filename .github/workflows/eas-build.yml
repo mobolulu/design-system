@@ -1,11 +1,18 @@
 # ============================================================================
 # MOBOLULU — build the mobile showcase on EAS and refresh the QR on Pages.
 #
-# Triggers on pushes that touch the mobile design system (not the web gallery):
-#   - apps/mobile-showcase/**
-#   - packages/mobile/**
-#   - packages/tokens/**
-#   - this workflow file
+# MBLL-201: push trigger removed 2026-10-12. extra.eas.projectId in
+# apps/mobile-showcase/app.json names an Expo experience that was deleted
+# from the airwaste EAS account (confirmed via `eas project:info` — not a
+# renumbered id, not a token problem), so every run has failed since
+# 2026-10-10 before it could queue a build, going red once per mobile
+# design-system publish. workflow_dispatch is kept so the whole lane —
+# the EAS invocation, the build-URL capture, the Pages dispatch — stays
+# one click away rather than rebuilt later. Re-add the push trigger below
+# once a decision is made to either recreate the EAS project (blocked on
+# the free-plan Android build quota resetting 2026-11-01, and on
+# @wiratanaya's go-ahead to spend) or this workflow is deleted outright.
+# See MBLL-201 for the full writeup.
 #
 # Flow: install deps (GHCR via GITHUB_TOKEN) -> `eas build` (preview APK) ->
 # wait for completion -> dispatch the Pages deploy, passing the build URL as
@@ -16,13 +23,6 @@
 name: eas-mobile-build
 
 on:
-  push:
-    branches: [master]
-    paths:
-      - 'apps/mobile-showcase/**'
-      - 'packages/mobile/**'
-      - 'packages/tokens/**'
-      - '.github/workflows/eas-build.yml'
   workflow_dispatch:
 
 # MBLL-169: defensive alignment with the event-aware key used fleet-wide —
