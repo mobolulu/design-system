@@ -243,15 +243,25 @@ function MobileView() {
           </div>
         ) : (
           <div className="py-2">
-            <Alert tone="info" title="QR not configured yet">
-              The Expo preview URL is set via the <code>VITE_EXPO_URL</code> build variable.
-              Once an Expo dev tunnel or EAS preview build is running, the QR appears here automatically.
+            {/* MBLL-307: the owner retired the Expo/EAS build pipeline
+                (2026-10-12 — "build it using github action, lets forget
+                using expo for now") that was this QR's only automated
+                producer. No replacement mobile-preview mechanism has been
+                built, so this says that plainly rather than pointing at an
+                Expo workflow that no longer runs. If a GitHub-Actions APK
+                producer (or any other distribution method) replaces it
+                later, this copy — and the Expo-Go-specific one above — need
+                to change with it, not just VITE_EXPO_URL's value. */}
+            <Alert tone="info" title="Live mobile preview is not available right now">
+              The EAS/Expo build that produced this QR has been retired. There is currently no
+              automated way to preview <code>@mobolulu/design-system-mobile</code> components on a
+              device from this page.
             </Alert>
-            <ol className="mt-4 list-decimal space-y-2 pl-5 text-sm text-neutral-700">
-              <li>Install <strong>Expo Go</strong> from the Google Play Store on your Android phone.</li>
-              <li>We start the Expo app (dev tunnel or EAS preview) and paste its URL into <code>VITE_EXPO_URL</code>.</li>
-              <li>Scan the QR above — the native app opens and renders every component.</li>
-            </ol>
+            <p className="mt-4 text-sm text-neutral-700">
+              To try the components natively today, run <code>apps/mobile-showcase</code> locally
+              with Expo Go's dev client, or check this page again once a replacement build/distribution
+              step exists.
+            </p>
           </div>
         )}
       </Card>
