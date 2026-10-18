@@ -10,7 +10,8 @@ export interface LogoProps {
   /**
    * Which app this is rendering in. Picks the launcher-icon livery so the
    * in-app mark and the home-screen icon are the same brand (MBLL-330).
-   * Defaults to the client green, which is also the package's brand colour.
+   * Same union as `AuthLayout`'s `brand`, so a composition can forward one
+   * to the other. Defaults to the client green, the package's brand colour.
    */
   app?: MascotApp;
 }

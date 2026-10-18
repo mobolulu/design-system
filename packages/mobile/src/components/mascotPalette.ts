@@ -1,3 +1,4 @@
+import type { AppBrandName } from '../tokens';
 import type { MascotLayer } from './mascotPaths';
 
 /**
@@ -5,8 +6,12 @@ import type { MascotLayer } from './mascotPaths';
  * launcher icon from the same mascot — client green, collector amber,
  * disposal indigo — so the in-app mark has to follow suit or the home screen
  * and the login screen show two different brands (MBLL-330).
+ *
+ * Deliberately an alias of `AppBrandName` rather than its own union:
+ * `AuthLayout` already takes a `brand`, and one app adding a second enum
+ * here is how a screen ends up on an amber field with a green mark.
  */
-export type MascotApp = 'client' | 'collector' | 'disposal';
+export type MascotApp = AppBrandName;
 
 export type MascotPalette = Record<MascotLayer, string>;
 
@@ -43,9 +48,6 @@ export const mascotPalettes: Record<MascotApp, MascotPalette> = {
   },
 };
 
-/** The tint each app's launcher icon sits on, for surfaces that need it. */
-export const mascotBackgrounds: Record<MascotApp, string> = {
-  client: '#DCFCE7',
-  collector: '#FFEDD5',
-  disposal: '#E0E7FF',
-};
+// The tint each launcher icon sits on is NOT repeated here: it is already
+// `appBrand[app].tint`, and the two matched exactly when sampled. A second
+// copy is a second thing to keep in step.

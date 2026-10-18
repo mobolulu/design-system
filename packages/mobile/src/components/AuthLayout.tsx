@@ -75,7 +75,15 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
       >
         <SafeAreaView edges={['top', 'left', 'right']} style={styles.heroSafe}>
           <Animated.View style={[styles.hero, heroEntry]} testID={`${testID}.hero`}>
-            <Logo variant="icon" size={markSize} title={wordmark} />
+            {/*
+              `app={brand}` is not optional here (MBLL-330). The mark is the
+              mascot, and it has one livery per app — the same recolouring
+              MBLL-230 gave the launcher icons. Left to its default this hero
+              draws the client's green mascot on the collector's amber field
+              and the gate's indigo one, which is the exact mismatch the
+              owner caught on a handset.
+            */}
+            <Logo variant="icon" size={markSize} title={wordmark} app={brand} />
             <View style={styles.heroText}>
               <Text variant="display" color="#FFFFFF" style={styles.centered}>
                 {wordmark}
