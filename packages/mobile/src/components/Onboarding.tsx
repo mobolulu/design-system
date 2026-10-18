@@ -11,7 +11,7 @@ import {
   type NativeSyntheticEvent,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { appBrand, radii, spacing, type AppBrandName } from '../tokens';
+import { appBrand, onFieldMuted, radii, spacing, type AppBrandName } from '../tokens';
 import { BrandField } from './BrandField';
 import { Button } from './Button';
 import { Icon, type IconName } from './Icon';
@@ -169,7 +169,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({
             count={slides.length}
             index={index}
             activeColor={field.accent}
-            inactiveColor="rgba(255,255,255,0.35)"
+            inactiveColor={onFieldMuted}
           />
           <Button
             size="xl"

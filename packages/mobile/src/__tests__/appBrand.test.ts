@@ -1,4 +1,4 @@
-import { appBrand, type AppBrandField } from '../tokens';
+import { appBrand, onFieldMuted, type AppBrandField } from '../tokens';
 
 // MBLL-331 asks for text over a gradient and says in the same breath that
 // contrast is part of it. A gradient has two ends, so "it looks fine" is
@@ -76,6 +76,69 @@ describe('appBrand fields', () => {
   it('gives each app a visually distinct field', () => {
     const mids = apps.map(([, field]) => field.mid);
     expect(new Set(mids).size).toBe(mids.length);
+  });
+});
+
+// MBLL-331, after looking at the render instead of the green tick. The
+// inactive pagination dot was an `rgba(255,255,255,0.35)` literal inline in
+// Onboarding.tsx — the one colour on the field that this file did not
+// guard, because it was not one of appBrand's four keys. Sampling the
+// pixels of mobile-client render 39120410702 put it at 2.24:1 against the
+// client field: under 1.4.11, on the control whose whole purpose is showing
+// how many slides remain.
+//
+// Alpha is composited here rather than asserted as a hex, because that is
+// what the device actually does — the dot is translucent white over a
+// gradient, so it has a different effective colour at each end of it.
+describe('the muted mark on a brand field', () => {
+  /** `rgba(r,g,b,a)` -> the opaque colour it resolves to over `background`. */
+  function composite(rgba: string, background: string): string {
+    const match = rgba.match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)$/);
+    if (!match) throw new Error(`not an rgba() string: ${rgba}`);
+    const [r, g, b] = [1, 2, 3].map((i) => Number(match[i]));
+    const alpha = Number(match[4]);
+    const under = [1, 3, 5].map((i) => parseInt(background.slice(i, i + 2), 16));
+    const mix = [r, g, b].map((c, i) => Math.round(alpha * c + (1 - alpha) * under[i]));
+    return `#${mix.map((c) => c.toString(16).padStart(2, '0').toUpperCase()).join('')}`;
+  }
+
+  it('is a parseable rgba string', () => {
+    expect(onFieldMuted).toMatch(/^rgba\(\d+,\s*\d+,\s*\d+,\s*[\d.]+\)$/);
+  });
+
+  describe.each(apps)('%s', (_name, field) => {
+    it.each([
+      ['deep', field.deep],
+      ['mid', field.mid],
+    ])('stays a visible UI element against the %s end', (_end, background) => {
+      expect(contrast(composite(onFieldMuted, background), background)).toBeGreaterThanOrEqual(
+        AA_NON_TEXT,
+      );
+    });
+  });
+
+  it('stays quieter than the active dot it sits beside', () => {
+    // The indicator only reads as a position if the current dot is the
+    // louder of the two. Raising the muted alpha to fix contrast must not
+    // overshoot into "both dots look the same".
+    for (const [, field] of apps) {
+      const muted = contrast(composite(onFieldMuted, field.mid), field.mid);
+      const active = contrast(field.accent, field.mid);
+      expect(muted).toBeLessThan(active);
+    }
+  });
+
+  it('would have failed at the alpha that shipped', () => {
+    // The regression this file exists to prevent, pinned as a fact: the
+    // old literal is genuinely under the floor, so the assertions above
+    // are load-bearing rather than trivially true at any alpha.
+    const shipped = 'rgba(255,255,255,0.35)';
+    const worst = Math.min(
+      ...apps.flatMap(([, field]) =>
+        [field.deep, field.mid].map((bg) => contrast(composite(shipped, bg), bg)),
+      ),
+    );
+    expect(worst).toBeLessThan(AA_NON_TEXT);
   });
 });
 
