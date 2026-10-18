@@ -4,6 +4,8 @@ import { act, render, screen } from '@testing-library/react-native';
 import { AuthLayout } from '../components/AuthLayout';
 import { BrandField } from '../components/BrandField';
 import { appBrand, motion, textRoles } from '../tokens';
+import { mascotPalettes } from '../components/mascotPalette';
+import { Path } from 'react-native-svg';
 
 // AuthLayout starts an entry animation on mount, which drives RN Animated
 // off timers. Under real timers those frames land outside `act` and every
@@ -51,6 +53,28 @@ describe('AuthLayout', () => {
     tagline: 'Book a waste pickup',
     supporting: 'Sign in with a one-time code',
   };
+
+  // MBLL-330: the hero mark is the mascot, and it has one livery per app —
+  // the recolouring MBLL-230 gave the launcher icons. Forwarding `brand` to
+  // `Logo` is what keeps this hero from drawing the client's green mascot on
+  // the collector's amber field.
+  it.each(Object.keys(appBrand) as (keyof typeof appBrand)[])(
+    'draws the %s mascot on that app field, not the default one',
+    (brand) => {
+      render(
+        <AuthLayout brand={brand} {...base}>
+          <RNText>form</RNText>
+        </AuthLayout>,
+      );
+
+      const fills = screen.UNSAFE_queryAllByType(Path).map((p) => p.props.fill);
+      expect(fills).toEqual(expect.arrayContaining(Object.values(mascotPalettes[brand])));
+      for (const other of Object.keys(mascotPalettes) as (keyof typeof mascotPalettes)[]) {
+        if (other === brand) continue;
+        expect(fills).not.toContain(mascotPalettes[other].mid);
+      }
+    },
+  );
 
   it('uses three distinct type sizes above the form', () => {
     render(
