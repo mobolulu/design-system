@@ -17,6 +17,13 @@ import { useMotionDuration } from './useMotionDuration';
  * Reduced motion collapses the duration to zero via `useMotionDuration`,
  * which lands the view at its final opacity and offset on the first frame
  * rather than leaving it invisible.
+ *
+ * TESTING: `Animated.timing` drives its frames off timers, so a test that
+ * renders a screen using this hook under real timers will print React's
+ * "update not wrapped in act" warning as those frames land. Use
+ * `jest.useFakeTimers()`, and `act(() => jest.advanceTimersByTime(...))`
+ * when the settled state is what is being asserted — see
+ * `__tests__/AuthLayout.test.tsx`.
  */
 export interface EntryAnimationOptions {
   /** Delay before this element starts, in ms. Stagger siblings with it. */

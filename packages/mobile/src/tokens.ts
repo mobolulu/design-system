@@ -80,6 +80,30 @@ export const appBrand = {
 
 export type AppBrandName = keyof typeof appBrand;
 
+/**
+ * A de-emphasised graphical mark ON a brand field — today, the inactive
+ * pagination dot under the onboarding slides.
+ *
+ * White at an alpha rather than a flat colour, so one value works over
+ * every app's gradient and over both ends of it.
+ *
+ * **The alpha is measured, not chosen.** `rgba(255,255,255,0.35)` shipped
+ * inline in `Onboarding.tsx` and was never covered by a test, because
+ * `appBrand.test.ts` guarded `deep`/`mid`/`accent`/`tint` and this literal
+ * was not one of them. Sampling the pixels of a real device render
+ * (mobile-client run 39120410702, `00-onboarding-final.png`) put the
+ * inactive dots at **2.24:1** against the client field — under 1.4.11's
+ * 3:1 for a non-text UI element, on the one control whose whole job is
+ * telling the user how many slides remain.
+ *
+ * 0.55 is the floor that clears 3:1 on the worst pair (collector `mid`, at
+ * 3.28:1); 0.6 is used for the same reason the greens are green-900/800
+ * rather than `brand.primary` — a floor with no headroom is a floor that
+ * breaks on the next nudge. `appBrand.test.ts` composites this over both
+ * ends of all three fields and asserts it.
+ */
+export const onFieldMuted = 'rgba(255,255,255,0.6)';
+
 export const colors = {
   brand,
   status,
