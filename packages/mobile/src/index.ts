@@ -19,6 +19,10 @@ export * from './components/Alert';
 export * from './components/Modal';
 export * from './components/Logo';
 export * from './components/Icon';
+export * from './components/BrandField';
+export * from './components/AuthLayout';
+export * from './components/PaginationDots';
+export * from './components/Onboarding';
 export * from './components/OfflineBanner';
 export * from './components/PendingSyncBadge';
 export * from './components/OtpSignIn';
@@ -32,6 +36,11 @@ export * from './components/BottomSheet';
 export * from './components/ListRow';
 export { cn } from './lib/utils';
 export { useMotionDuration } from './lib/useMotionDuration';
+export {
+  useEntryAnimation,
+  type EntryAnimationOptions,
+  type EntryAnimationStyle,
+} from './lib/useEntryAnimation';
 // `haptics` is NOT re-exported here (MBLL-134): it's the only thing in this
 // package that imports `expo-haptics`, which none of the three apps
 // currently install. Bundling it into the main entry would make Metro
