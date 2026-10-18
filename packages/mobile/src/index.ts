@@ -18,6 +18,8 @@ export * from './components/Stack';
 export * from './components/Alert';
 export * from './components/Modal';
 export * from './components/Logo';
+export { mascotPalettes, mascotBackgrounds, type MascotApp, type MascotPalette } from './components/mascotPalette';
+export { MASCOT_LAYERS, MASCOT_VIEWBOX, type MascotLayer } from './components/mascotPaths';
 export * from './components/Icon';
 export * from './components/BrandField';
 export * from './components/AuthLayout';

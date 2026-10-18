@@ -13,9 +13,12 @@
     "build": "npm run build --workspaces --if-present",
     "clean": "npm run clean --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
-    "typecheck": "npm run typecheck --workspaces --if-present"
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "trace-mascot": "node scripts/trace-mascot.mjs"
   },
   "devDependencies": {
+    "pngjs": "^7.0.0",
+    "potrace": "^2.1.8",
     "typescript": "^5.4.0"
   }
 }
