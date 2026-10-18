@@ -104,29 +104,48 @@ export const OtpSignIn: React.FC<OtpSignInProps> = ({
   if (step === 'identify') {
     return (
       <VStack gap={4}>
-        <View className="flex-row gap-2" accessibilityRole="radiogroup">
-          {CHANNELS.map((c) => {
-            const active = c.key === channel;
-            return (
-              <Pressable
-                key={c.key}
-                role="radio"
-                accessibilityState={{ selected: active }}
-                testID={`otp.channel.${c.key.toLowerCase()}`}
-                onPress={() => setChannel(c.key)}
-                className={cn(
-                  'rounded-full px-4 py-2',
-                  active ? 'bg-primary' : 'bg-muted border border-border',
-                )}
-              >
-                <Text
-                  className={cn('text-sm font-semibold', active ? 'text-primary-foreground' : 'text-foreground')}
+        {/*
+          A segmented control, not two pills (MBLL-331). The selected
+          channel used to be `bg-primary` — the same filled green as "Send
+          code" directly below it, so the screen offered two equally loud
+          things to press and the actual action was the second of them.
+          This is a setting: one muted track, the selection a quiet raised
+          chip inside it, and a label saying what it does.
+
+          Behaviour, testIDs, roles and `accessibilityState` are unchanged —
+          MBLL-331 may restyle this control but not alter the auth flow.
+        */}
+        <View className="gap-2">
+          <Text className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            Send my code via
+          </Text>
+          <View className="flex-row rounded-full bg-muted p-1" accessibilityRole="radiogroup">
+            {CHANNELS.map((c) => {
+              const active = c.key === channel;
+              return (
+                <Pressable
+                  key={c.key}
+                  role="radio"
+                  accessibilityState={{ selected: active }}
+                  testID={`otp.channel.${c.key.toLowerCase()}`}
+                  onPress={() => setChannel(c.key)}
+                  className={cn(
+                    'flex-1 items-center justify-center rounded-full px-4 py-2',
+                    active && 'bg-card border border-border',
+                  )}
                 >
-                  {c.label}
-                </Text>
-              </Pressable>
-            );
-          })}
+                  <Text
+                    className={cn(
+                      'text-sm',
+                      active ? 'font-semibold text-foreground' : 'font-medium text-muted-foreground',
+                    )}
+                  >
+                    {c.label}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </View>
         </View>
 
         <Input

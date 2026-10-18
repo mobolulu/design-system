@@ -8,6 +8,10 @@ import { Icon, ICON_NAMES, type IconName } from '../components/Icon';
 // empty box — so pin the contract here, not just in the apps.
 const REQUIRED: IconName[] = ['home', 'receipt', 'calendar', 'wallet', 'user', 'banknote', 'gate'];
 
+// The onboarding slides (MBLL-331). Same contract: a dropped name is a
+// slide with a blank space where its picture was, in all three apps.
+const ONBOARDING: IconName[] = ['bag', 'truck', 'shield'];
+
 // react-native-svg's host nodes normalise colours into an internal
 // representation, so assert against the SVG elements themselves.
 const drawn = () => [...screen.UNSAFE_queryAllByType(Path), ...screen.UNSAFE_queryAllByType(Circle)];
@@ -20,9 +24,32 @@ describe('Icon', () => {
     }
   });
 
-  it.each(REQUIRED)('renders %s with at least one drawn part', (name) => {
+  it('ships every glyph the onboarding slides need', () => {
+    for (const name of ONBOARDING) {
+      expect(ICON_NAMES).toContain(name);
+    }
+  });
+
+  it.each([...REQUIRED, ...ONBOARDING])('renders %s with at least one drawn part', (name) => {
     render(<Icon name={name} />);
     expect(drawn().length).toBeGreaterThan(0);
+  });
+
+  it.each(ONBOARDING)('draws %s inside the shared 24-unit grid', (name) => {
+    // One stroke-style set on one grid is the whole premise of this
+    // component. A glyph whose coordinates run outside the viewBox clips at
+    // the slide's 36dp size, which is only visible on a device.
+    render(<Icon name={name} />);
+    const coordinates = drawn().flatMap((part) =>
+      part.props.d
+        ? (String(part.props.d).match(/-?\d+(\.\d+)?/g) ?? []).map(Number)
+        : [Number(part.props.cx), Number(part.props.cy)],
+    );
+    expect(coordinates.length).toBeGreaterThan(0);
+    for (const value of coordinates) {
+      expect(value).toBeGreaterThanOrEqual(0);
+      expect(value).toBeLessThanOrEqual(24);
+    }
   });
 
   it('paints every stroked part in the colour it is given', () => {

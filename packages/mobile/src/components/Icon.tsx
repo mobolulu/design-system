@@ -12,8 +12,23 @@ import { theme } from '../theme';
 // its own placeholder and every tab rendered as an empty box. Only the
 // glyphs those tab bars actually need live here — a 300-icon dependency for
 // seven shapes is not a trade worth making.
+//
+// `bag`, `truck` and `shield` were added for the onboarding slides
+// (MBLL-331), which need a picture for "what we do", "what happens next"
+// and "your money is held safely". Same reasoning, same grid: three more
+// shapes, still no icon dependency.
 
-export type IconName = 'home' | 'receipt' | 'calendar' | 'wallet' | 'user' | 'banknote' | 'gate';
+export type IconName =
+  | 'home'
+  | 'receipt'
+  | 'calendar'
+  | 'wallet'
+  | 'user'
+  | 'banknote'
+  | 'gate'
+  | 'bag'
+  | 'truck'
+  | 'shield';
 
 type GlyphPart =
   | { readonly kind: 'path'; readonly d: string }
@@ -81,6 +96,34 @@ const glyphs: Record<IconName, readonly GlyphPart[]> = {
     { kind: 'path', d: 'M4.5 8.75 H19.75 A1.5 1.5 0 0 1 21.25 10.25 V11.25 A1.5 1.5 0 0 1 19.75 12.75 H4.5' },
     { kind: 'path', d: 'M11 8.75 L8.25 12.75' },
     { kind: 'path', d: 'M17.5 8.75 L14.75 12.75' },
+  ],
+  // Waste bag: tied neck, body tapering out to the floor. The unit the
+  // client app prices in is bags, not kilograms (MBLL-39), so the first
+  // onboarding slide shows one.
+  bag: [
+    { kind: 'path', d: 'M10 3.5 L9.25 6.5 A2 2 0 0 0 10 8.25 H14 A2 2 0 0 0 14.75 6.5 L14 3.5' },
+    {
+      kind: 'path',
+      d: 'M10.25 8.25 L6.5 17.5 A2.25 2.25 0 0 0 8.6 20.75 H15.4 A2.25 2.25 0 0 0 17.5 17.5 L13.75 8.25',
+    },
+    { kind: 'path', d: 'M12 11.75 V16.75' },
+  ],
+  // Pickup truck seen from the side: cab, bed, two wheels. "What happens
+  // after you book" is a truck arriving.
+  truck: [
+    { kind: 'path', d: 'M2.75 16.25 V7.75 A1 1 0 0 1 3.75 6.75 H12.5 A1 1 0 0 1 13.5 7.75 V16.25' },
+    { kind: 'path', d: 'M13.5 10.25 H17 L20.75 13.5 V16.25' },
+    { kind: 'path', d: 'M2.75 16.25 H5.25' },
+    { kind: 'path', d: 'M9.25 16.25 H14.75' },
+    { kind: 'path', d: 'M18.75 16.25 H20.75' },
+    { kind: 'circle', cx: 7.25, cy: 17.75, r: 1.75 },
+    { kind: 'circle', cx: 16.75, cy: 17.75, r: 1.75 },
+  ],
+  // Shield with a tick: the money is held, then released. Not a padlock —
+  // a lock says "you cannot get at this", which is the wrong promise.
+  shield: [
+    { kind: 'path', d: 'M12 3.25 L19.25 6 V12 C19.25 16.5 16 19.6 12 20.75 C8 19.6 4.75 16.5 4.75 12 V6 Z' },
+    { kind: 'path', d: 'M9 11.75 L11.25 14 L15.25 10' },
   ],
 };
 

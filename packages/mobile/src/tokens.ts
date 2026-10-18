@@ -44,11 +44,48 @@ export const userStatus = {
   ADMIN: brand.dark,
 } as const;
 
+// Per-app brand fields (MBLL-331). MBLL-230 recoloured each app's launcher
+// icon and splash and stopped there, so the three apps share one green
+// palette in `brand` and diverge only on a 100-level splash tint that no
+// screen reads. The pre-login composition is full-bleed brand colour behind
+// white text, which needs the other end of each app's ramp — and needs it
+// in tokens rather than inlined per app, because the contrast guarantee
+// below is only checkable in one place.
+//
+// `deep` -> `mid` is the gradient, top to bottom. Both ends are dark enough
+// that `#FFFFFF` and `tint` clear WCAG AA (4.5:1) for body text ON EITHER
+// END — asserted in __tests__/appBrand.test.ts against the real WCAG
+// formula, not eyeballed. That is why the greens here are green-900/800
+// rather than `brand.primary`: #15803D reaches only 4.57:1 against `tint`,
+// which leaves no headroom for a later nudge to either value.
+//
+// `accent` is for graphical elements on the field (the active pagination
+// dot), held to 1.4.11's 3:1 rather than 4.5:1 — it never carries text.
+export interface AppBrandField {
+  /** Gradient start, at the top of the field. */
+  readonly deep: string;
+  /** Gradient end, at the bottom of the field. Also the solid fallback. */
+  readonly mid: string;
+  /** Graphical accent on the field — never text. */
+  readonly accent: string;
+  /** Muted text on the field; the MBLL-230 splash tint. */
+  readonly tint: string;
+}
+
+export const appBrand = {
+  client: { deep: '#14532D', mid: '#166534', accent: '#4ADE80', tint: '#DCFCE7' },
+  collector: { deep: '#78350F', mid: '#92400E', accent: '#FBBF24', tint: '#FFEDD5' },
+  disposal: { deep: '#312E81', mid: '#3730A3', accent: '#A5B4FC', tint: '#E0E7FF' },
+} as const satisfies Record<string, AppBrandField>;
+
+export type AppBrandName = keyof typeof appBrand;
+
 export const colors = {
   brand,
   status,
   neutral,
   userStatus,
+  appBrand,
 } as const;
 
 // 4px base spacing scale. 1 unit = 4px.

@@ -1,4 +1,4 @@
-import { colors, spacing, radii, elevation, motion, textRoles, typography, type Tone } from './tokens';
+import { colors, spacing, radii, elevation, motion, textRoles, typography, appBrand, type Tone } from './tokens';
 
 // React Native theme object derived from the shared brand tokens.
 // Consumed by the Expo client + collector apps.
@@ -8,6 +8,7 @@ export const theme = {
     status: colors.status,
     neutral: colors.neutral,
     userStatus: colors.userStatus,
+    appBrand,
   },
   spacing,
   radii,
