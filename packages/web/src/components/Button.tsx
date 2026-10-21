@@ -36,7 +36,18 @@ export interface ButtonProps
   variant?: ButtonVariant;
   size?: ButtonSize;
   loading?: boolean;
+  /**
+   * Stretches the button to fill the width of its container. Correct for a
+   * button that is the only (or stacked, column-direction) child. In a row
+   * of buttons each one claims 100% of the row's width, pushing its
+   * siblings out — use `grow` there instead.
+   */
   fullWidth?: boolean;
+  /**
+   * Lets the button share the row equally with its siblings (`flex: 1`),
+   * instead of claiming the whole row the way `fullWidth` does.
+   */
+  grow?: boolean;
   asChild?: boolean;
 }
 
@@ -47,6 +58,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       size = 'md',
       loading = false,
       fullWidth = false,
+      grow = false,
       asChild = false,
       className,
       children,
@@ -59,7 +71,12 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <Comp
         ref={ref}
-        className={cn(buttonVariants({ variant, size }), fullWidth && 'w-full', className)}
+        className={cn(
+          buttonVariants({ variant, size }),
+          fullWidth && 'w-full',
+          grow && 'flex-1',
+          className,
+        )}
         disabled={disabled || loading}
         {...rest}
       >
