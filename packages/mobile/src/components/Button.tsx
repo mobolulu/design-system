@@ -58,7 +58,19 @@ const buttonTextVariants = cva('font-semibold', {
 
 export interface ButtonProps extends VariantProps<typeof buttonVariants> {
   loading?: boolean;
+  /**
+   * Stretches the button to fill the width of its container
+   * (`self-stretch w-full`). Correct for a button that is the only — or a
+   * stacked, column-direction — child. In a row of buttons each one claims
+   * 100% of the row's width, pushing its siblings off the screen edge
+   * (MBLL-219); use `grow` there instead.
+   */
   fullWidth?: boolean;
+  /**
+   * Lets the button share the row equally with its siblings (`flex-1`),
+   * instead of claiming the whole row the way `fullWidth` does.
+   */
+  grow?: boolean;
   disabled?: boolean;
   onPress?: () => void;
   style?: object;
@@ -74,6 +86,7 @@ export const Button: React.FC<ButtonProps> & { variants: typeof buttonVariants }
   size = 'md',
   loading = false,
   fullWidth = false,
+  grow = false,
   disabled = false,
   onPress,
   style,
@@ -88,7 +101,12 @@ export const Button: React.FC<ButtonProps> & { variants: typeof buttonVariants }
     role="button"
     disabled={disabled || loading}
     onPress={onPress}
-    className={cn(buttonVariants({ variant, size }), fullWidth && 'self-stretch w-full', className)}
+    className={cn(
+      buttonVariants({ variant, size }),
+      fullWidth && 'self-stretch w-full',
+      grow && 'flex-1',
+      className,
+    )}
     style={style}
   >
     {loading && <ActivityIndicator size="small" color={loadingColor[variant ?? 'primary']} />}
