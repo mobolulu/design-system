@@ -22,4 +22,19 @@ describe('Button', () => {
     expect(button.className).toContain('flex-1');
     expect(button.className).not.toContain('w-full');
   });
+
+  it('asChild renders a single element carrying the button classes, with no Slot throw', () => {
+    expect(() =>
+      render(
+        <Button asChild variant="primary">
+          <a href="/">Back</a>
+        </Button>,
+      ),
+    ).not.toThrow();
+
+    const link = screen.getByRole('link', { name: 'Back' });
+    expect(link.tagName).toBe('A');
+    expect(link.className).toContain('bg-primary');
+    expect(screen.queryByRole('button')).toBeNull();
+  });
 });
