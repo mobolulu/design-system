@@ -18,6 +18,13 @@ export interface OtpSignInProps {
   defaultChannel?: OtpChannel;
   /** Names the device session the refresh token belongs to (spec §6). */
   deviceId?: string;
+  /**
+   * Opens whatever "support" means to this app (Telegram, mailto, a help
+   * screen). When given, a "Contact support" action appears on the one
+   * failure the user cannot resolve themselves: ACCOUNT_SUSPENDED. Omit it
+   * and the suspension message still shows — just without the affordance.
+   */
+  onContactSupport?: () => void;
 }
 
 const CHANNELS: { key: OtpChannel; label: string }[] = [
@@ -35,6 +42,7 @@ export const OtpSignIn: React.FC<OtpSignInProps> = ({
   onAuthed,
   defaultChannel = 'TELEGRAM',
   deviceId,
+  onContactSupport,
 }) => {
   const [step, setStep] = useState<'identify' | 'code'>('identify');
   const [channel, setChannel] = useState<OtpChannel>(defaultChannel);
@@ -45,6 +53,10 @@ export const OtpSignIn: React.FC<OtpSignInProps> = ({
   const [attemptsLeft, setAttemptsLeft] = useState<number | null>(null);
   const [sentTo, setSentTo] = useState<{ channel: OtpChannel; identifier: string; expiresInS: number } | null>(null);
   const [retryAfterS, setRetryAfterS] = useState(0);
+  // A suspension belongs to the account, not to the attempt: it survives
+  // the error being cleared by the next press, and only lifts when the
+  // user aims the flow at a different identifier.
+  const [suspended, setSuspended] = useState(false);
 
   // Rate-limit countdown: ticks down while positive, stops at zero.
   useEffect(() => {
@@ -66,6 +78,7 @@ export const OtpSignIn: React.FC<OtpSignInProps> = ({
       const err = e as OtpError;
       setError(err);
       if (err.code === 'RATE_LIMITED' && err.retryAfterS) setRetryAfterS(err.retryAfterS);
+      if (err.code === 'ACCOUNT_SUSPENDED') setSuspended(true);
     } finally {
       setBusy(false);
     }
@@ -88,9 +101,31 @@ export const OtpSignIn: React.FC<OtpSignInProps> = ({
       if (typeof err.attemptsLeft === 'number') setAttemptsLeft(err.attemptsLeft);
       // A dead code cannot be retyped into a win — clear it.
       if (err.code === 'CODE_EXPIRED' || err.code === 'ATTEMPTS_EXCEEDED') setCode('');
+      // Neither can a correct one, once the account is suspended: verifying
+      // again and resending both 403 forever, so stop offering them.
+      if (err.code === 'ACCOUNT_SUSPENDED') setSuspended(true);
     } finally {
       setBusy(false);
     }
+  }
+
+  // Pointing the flow at another account is the only move left to a
+  // suspended one, so editing the identifier clears the lock-out.
+  function editIdentifier(text: string) {
+    setIdentifier(text);
+    if (suspended) {
+      setSuspended(false);
+      setError(null);
+    }
+  }
+
+  function supportAction() {
+    if (!suspended || !onContactSupport) return null;
+    return (
+      <Button variant="secondary" fullWidth testID="otp.contact-support" onPress={onContactSupport}>
+        Contact support
+      </Button>
+    );
   }
 
   function errorText(): string | null {
@@ -152,19 +187,20 @@ export const OtpSignIn: React.FC<OtpSignInProps> = ({
           testID="otp.identifier"
           label={channel === 'TELEGRAM' ? 'Phone number' : 'Email'}
           value={identifier}
-          onChangeText={setIdentifier}
+          onChangeText={editIdentifier}
           placeholder={channel === 'TELEGRAM' ? '+62 812 3456 7890' : 'you@example.com'}
           keyboardType={channel === 'TELEGRAM' ? 'phone-pad' : 'email-address'}
         />
 
         {error && <Alert tone="error">{errorText()}</Alert>}
+        {supportAction()}
 
         <Button
           size="xl"
           fullWidth
           testID="otp.send-code"
           loading={busy}
-          disabled={!identifier.trim() || retryAfterS > 0}
+          disabled={!identifier.trim() || retryAfterS > 0 || suspended}
           onPress={requestCode}
         >
           {retryAfterS > 0 ? `Try again in ${formatCountdown(retryAfterS)}` : 'Send code'}
@@ -191,13 +227,14 @@ export const OtpSignIn: React.FC<OtpSignInProps> = ({
       />
 
       {error && <Alert tone="error">{errorText()}</Alert>}
+      {supportAction()}
 
       <Button
         size="xl"
         fullWidth
         testID="otp.verify"
         loading={busy}
-        disabled={code.length !== 6}
+        disabled={code.length !== 6 || suspended}
         onPress={verify}
       >
         Verify
@@ -206,7 +243,7 @@ export const OtpSignIn: React.FC<OtpSignInProps> = ({
       <Button
         variant="ghost"
         testID="otp.resend"
-        disabled={retryAfterS > 0 || busy}
+        disabled={retryAfterS > 0 || busy || suspended}
         onPress={requestCode}
       >
         {retryAfterS > 0 ? `Resend available in ${formatCountdown(retryAfterS)}` : 'Resend code'}

@@ -1,0 +1,31 @@
+fix(mobile): map 403 to ACCOUNT_SUSPENDED, not REQUEST_FAILED (MBLL-494) — v0.8.4
+
+service-auth returns `403 ACCOUNT_SUSPENDED` from `/otp/verify` for a
+correct code on a suspended account (MBLL-492, documented in MBLL-493).
+`toOtpError` had no `case 403`, so it fell through to the default branch
+and came out tagged `REQUEST_FAILED`.
+
+The user did see the right words — `ApiError.message` carries the
+server's "This account has been suspended" and `errorText()` renders it
+— but a `REQUEST_FAILED` code cannot drive anything else. "Resend code"
+stayed live on an account where every resend and every verify 403s
+forever, there was no support affordance, and the type carried nothing
+to special-case later.
+
+- `OtpErrorCode` gains `ACCOUNT_SUSPENDED`; `case 403:` maps onto it and
+  passes the server message through as before, with a fallback for a
+  403 that arrives with no body.
+- `OtpSignIn` holds the suspension as account state, not attempt state:
+  verify, resend and send-code go disabled and stay disabled across the
+  next press. Editing the identifier — the only move left — lifts it.
+- New optional `onContactSupport` renders a "Contact support" action
+  while suspended. Omit it and the message still shows; the three apps
+  compile unchanged either way.
+
+The token-refresh interceptor was never in play here: `apiFetch` only
+retries 401 with `auth: true`, and `/otp/verify` posts `auth: false`.
+
+The lockfile hunk for packages/web is a pre-existing stale version
+entry (0.6.3 → 0.6.4) picked up by regenerating it.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>

@@ -7,6 +7,7 @@ export type OtpErrorCode =
   | 'INVALID_CODE' // 401 on /otp/verify — wrong or consumed code
   | 'CODE_EXPIRED' // 410 on /otp/verify — request a new one
   | 'ATTEMPTS_EXCEEDED' // 429 on /otp/verify — the code is dead
+  | 'ACCOUNT_SUSPENDED' // 403 on /otp/verify — right code, refused sign-in
   | 'REQUEST_FAILED'; // transport failure or unexpected shape
 
 export class OtpError extends Error {
