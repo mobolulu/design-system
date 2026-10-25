@@ -103,6 +103,94 @@ describe('OtpSignIn', () => {
     expect((screen.getByTestId('otp.code').props as { value?: string }).value).toBe('');
   });
 
+  it('stops offering verify and resend once the account is suspended', async () => {
+    const post = jest
+      .fn<Promise<unknown>, [string, unknown]>()
+      .mockResolvedValueOnce({ channel: 'TELEGRAM', expiresInS: 300, attemptsAllowed: 5 })
+      .mockRejectedValueOnce(
+        transportError(403, { code: 'ACCOUNT_SUSPENDED', message: 'This account has been suspended' }),
+      );
+    const onAuthed = jest.fn();
+    render(<OtpSignIn client={createOtpClient(post as unknown as OtpPost)} onAuthed={onAuthed} />);
+
+    fireEvent.changeText(screen.getByTestId('otp.identifier'), '+6281234567890');
+    fireEvent.press(screen.getByTestId('otp.send-code'));
+    await waitFor(() => expect(screen.getByTestId('otp.code')).toBeTruthy());
+    fireEvent.changeText(screen.getByTestId('otp.code'), '418263');
+    fireEvent.press(screen.getByTestId('otp.verify'));
+
+    await waitFor(() => expect(screen.getByText(/this account has been suspended/i)).toBeTruthy());
+    expect(onAuthed).not.toHaveBeenCalled();
+    expect(isDisabled(screen.getByTestId('otp.verify'))).toBe(true);
+    expect(isDisabled(screen.getByTestId('otp.resend'))).toBe(true);
+
+    fireEvent.press(screen.getByTestId('otp.resend'));
+    expect(post).toHaveBeenCalledTimes(2);
+  });
+
+  it('offers support only when the app said what support is', async () => {
+    function renderSuspended(props: { onContactSupport?: () => void }) {
+      const post = jest
+        .fn<Promise<unknown>, [string, unknown]>()
+        .mockResolvedValueOnce({ channel: 'TELEGRAM', expiresInS: 300, attemptsAllowed: 5 })
+        .mockRejectedValueOnce(transportError(403, { code: 'ACCOUNT_SUSPENDED', message: 'Suspended' }));
+      return render(
+        <OtpSignIn client={createOtpClient(post as unknown as OtpPost)} onAuthed={jest.fn()} {...props} />,
+      );
+    }
+
+    async function suspend() {
+      fireEvent.changeText(screen.getByTestId('otp.identifier'), '+6281234567890');
+      fireEvent.press(screen.getByTestId('otp.send-code'));
+      await waitFor(() => expect(screen.getByTestId('otp.code')).toBeTruthy());
+      fireEvent.changeText(screen.getByTestId('otp.code'), '418263');
+      fireEvent.press(screen.getByTestId('otp.verify'));
+      await waitFor(() => expect(screen.getByText(/suspended/i)).toBeTruthy());
+    }
+
+    const { unmount } = renderSuspended({});
+    await suspend();
+    expect(screen.queryByTestId('otp.contact-support')).toBeNull();
+    unmount();
+
+    const onContactSupport = jest.fn();
+    renderSuspended({ onContactSupport });
+    await suspend();
+    fireEvent.press(screen.getByTestId('otp.contact-support'));
+    expect(onContactSupport).toHaveBeenCalledTimes(1);
+  });
+
+  it('lifts the suspension lock-out when the user aims at another account', async () => {
+    const post = jest
+      .fn<Promise<unknown>, [string, unknown]>()
+      .mockResolvedValueOnce({ channel: 'TELEGRAM', expiresInS: 300, attemptsAllowed: 5 })
+      .mockRejectedValueOnce(transportError(403, { code: 'ACCOUNT_SUSPENDED', message: 'Suspended' }));
+    render(
+      <OtpSignIn
+        client={createOtpClient(post as unknown as OtpPost)}
+        onAuthed={jest.fn()}
+        onContactSupport={jest.fn()}
+      />,
+    );
+
+    fireEvent.changeText(screen.getByTestId('otp.identifier'), '+6281234567890');
+    fireEvent.press(screen.getByTestId('otp.send-code'));
+    await waitFor(() => expect(screen.getByTestId('otp.code')).toBeTruthy());
+    fireEvent.changeText(screen.getByTestId('otp.code'), '418263');
+    fireEvent.press(screen.getByTestId('otp.verify'));
+    await waitFor(() => expect(screen.getByText(/suspended/i)).toBeTruthy());
+
+    // Back to identify: still locked against the suspended account.
+    fireEvent.press(screen.getByTestId('otp.change-identifier'));
+    expect(isDisabled(screen.getByTestId('otp.send-code'))).toBe(true);
+    expect(screen.getByTestId('otp.contact-support')).toBeTruthy();
+
+    fireEvent.changeText(screen.getByTestId('otp.identifier'), '+6289999999999');
+    expect(isDisabled(screen.getByTestId('otp.send-code'))).toBe(false);
+    expect(screen.queryByTestId('otp.contact-support')).toBeNull();
+    expect(screen.queryByText(/suspended/i)).toBeNull();
+  });
+
   it('locks sending behind the rate-limit window', async () => {
     const post = jest
       .fn<Promise<unknown>, [string, unknown]>()

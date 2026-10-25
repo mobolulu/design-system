@@ -101,6 +101,29 @@ describe('createOtpClient', () => {
     });
   });
 
+  it('maps a 403 on verify to ACCOUNT_SUSPENDED, not REQUEST_FAILED', async () => {
+    post.mockRejectedValue(
+      new TransportError(403, { code: 'ACCOUNT_SUSPENDED', message: 'This account has been suspended' }),
+    );
+    const client = createOtpClient(post as unknown as OtpPost);
+
+    await expect(client.verifyOtp({ channel: 'TELEGRAM', identifier: '+62', code: '418263' })).rejects.toMatchObject({
+      code: 'ACCOUNT_SUSPENDED',
+      message: 'This account has been suspended',
+      status: 403,
+    });
+  });
+
+  it('falls back to its own wording when a 403 arrives with no message', async () => {
+    post.mockRejectedValue(new TransportError(403, {}));
+    const client = createOtpClient(post as unknown as OtpPost);
+
+    await expect(client.verifyOtp({ channel: 'TELEGRAM', identifier: '+62', code: '418263' })).rejects.toMatchObject({
+      code: 'ACCOUNT_SUSPENDED',
+      message: expect.stringMatching(/suspended/i),
+    });
+  });
+
   it('wraps an unexpected failure as REQUEST_FAILED with the transport message', async () => {
     post.mockRejectedValue(new Error('network down'));
     const client = createOtpClient(post as unknown as OtpPost);

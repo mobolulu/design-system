@@ -83,6 +83,16 @@ function toOtpError(e: unknown, phase: 'request' | 'verify'): OtpError {
           );
     case 410:
       return new OtpError(body?.message ?? 'That code expired — request a new one.', 'CODE_EXPIRED', status);
+    case 403:
+      // The code was correct; the account is the problem (MBLL-493). The
+      // check deliberately runs after the code is verified, so a 403 never
+      // reaches a caller who only guessed at the identifier. Nothing the
+      // user can type fixes this — support has to lift the suspension.
+      return new OtpError(
+        body?.message ?? 'This account has been suspended — contact support to restore access.',
+        'ACCOUNT_SUSPENDED',
+        status,
+      );
     case 401:
       return new OtpError(
         body?.message ?? 'That code does not match.',

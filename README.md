@@ -82,13 +82,17 @@ architecture §6 — code to Telegram/email, no passwords, no social OAuth):
 
 - `createOtpClient(post)` — the flow logic: documented paths, request
   bodies, and the mapping of every documented failure (rate limits,
-  wrong code, expired code, dead code) onto an `OtpError` carrying
-  `retryAfterS` / `attemptsLeft` so the UI can react. The app supplies
-  a `post(path, body)` — typically a one-liner over its `apiFetch`.
+  wrong code, expired code, dead code, suspended account) onto an
+  `OtpError` carrying `retryAfterS` / `attemptsLeft` so the UI can react.
+  The app supplies a `post(path, body)` — typically a one-liner over its
+  `apiFetch`.
 - `OtpSignIn` — the two-step screen: channel → identifier → code →
   session. Stable `testID`s (`otp.identifier`, `otp.send-code`,
   `otp.code`, `otp.verify`, …) so the same Maestro journey drives it in
-  every app.
+  every app. Pass `onContactSupport` to get a "Contact support" action on
+  the one failure the user cannot fix themselves — a `403
+  ACCOUNT_SUSPENDED` (MBLL-493), which also disables verify and resend
+  until the flow is aimed at a different account.
 
 One Prism quirk: the mock ignores the spec's `servers.url` prefix, so it
 serves `/otp/request` at the root rather than `/api/v1/auth/otp/request`.
