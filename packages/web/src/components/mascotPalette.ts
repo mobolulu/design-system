@@ -25,8 +25,12 @@ export const adminMascotPalette: MascotPalette = {
 /**
  * Reversed form for the dark sidebar (`tone="light"`): the console has no
  * supplied "on-dark" artwork, so each shaded layer is lightened toward white
- * (55%) to keep the silhouette off the near-black sidebar background — the
- * un-lightened `outline`/`shade` are dark enough to disappear against it.
+ * (55%) to keep the silhouette off the sidebar background — the un-lightened
+ * `outline`/`shade` are dark enough to disappear against it. That background
+ * is a `brand-dark` (`#166534`) to black gradient and the logo sits at its
+ * top, so the colour to check legibility against is that dark green, not
+ * black: the lift takes the darkest layer from ~2.1:1 to ~2.6:1 and `light`
+ * to ~4.0:1 against it.
  * `white` (teeth/highlights) and `eye` (iris) are left untouched; MBLL-330
  * kept the iris the same yellow across every livery on purpose. Treat this as
  * an interim, documented derivation pending real design sign-off, same as
