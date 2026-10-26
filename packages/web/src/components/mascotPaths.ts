@@ -4,6 +4,8 @@
 // do not re-trace or edit by hand. Keep in sync with the mobile copy the same
 // way tokens.ts/tone.ts stay in sync with their mobile/tokens originals.
 //
+// Cumulative layers, darkest first: each path is a superset of the next, so
+// painting them in order leaves no transparent seams between tones. `eye` is
 // painted last over the outline tone, which gives the iris its dark rim.
 export const MASCOT_VIEWBOX = 512;
 
