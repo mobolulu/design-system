@@ -14,9 +14,10 @@ export interface LogoProps {
 }
 
 // Canonical standalone copies of this mark live in assets/mobolulu-logo.svg
-// (full) and assets/mobolulu-icon.svg (icon). They carry the same paths,
-// `color`-tone fills and transform as the code below, and must be
-// regenerated whenever either changes.
+// (full), assets/mobolulu-icon.svg (icon) and assets/mobolulu-icon-16.svg
+// (icon, cropped to the face for 16px favicon slices — same paths, narrower
+// viewBox). They carry the same paths, `color`-tone fills and transform as
+// the code below, and must be regenerated whenever either changes.
 //
 // `full` places the mark this tall inside the 200-unit wordmark viewBox,
 // leaving room for "MOBOLULU" and the tagline to its right. Matches the
