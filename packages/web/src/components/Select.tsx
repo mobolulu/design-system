@@ -26,7 +26,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
   ({ label, error, hint, options, value, onValueChange, placeholder, disabled, className, id, name }, ref) => {
     const inputId = id ?? name;
     return (
-      <div className="flex flex-col gap-1.5">
+      <div className="flex flex-col gap-2">
         {label && (
           <label htmlFor={inputId} className="text-sm font-medium text-foreground">
             {label}
@@ -37,11 +37,12 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
             ref={ref}
             id={inputId}
             className={cn(
-              'flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background',
+              'flex h-11 w-full items-center justify-between rounded-lg border border-input bg-background px-3.5 py-2 text-sm text-foreground',
               'placeholder:text-muted-foreground',
-              'focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+              'transition-[border-color,box-shadow] hover:border-foreground/30',
+              'focus:border-ring focus:outline-none focus:ring-4 focus:ring-ring/20',
               'disabled:cursor-not-allowed disabled:opacity-50',
-              error && 'border-destructive focus:ring-destructive',
+              error && 'border-destructive hover:border-destructive focus:border-destructive focus:ring-destructive/20',
               className,
             )}
           >
