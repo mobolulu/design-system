@@ -11,7 +11,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
   ({ label, error, hint, className, id, ...rest }, ref) => {
     const inputId = id ?? rest.name;
     return (
-      <div className="flex flex-col gap-1.5">
+      <div className="flex flex-col gap-2">
         {label && (
           <label htmlFor={inputId} className="text-sm font-medium text-foreground">
             {label}
@@ -21,11 +21,12 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
           ref={ref}
           id={inputId}
           className={cn(
-            'flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background',
+            'flex min-h-[96px] w-full rounded-lg border border-input bg-background px-3.5 py-2.5 text-sm leading-relaxed text-foreground',
             'placeholder:text-muted-foreground',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+            'transition-[border-color,box-shadow] hover:border-foreground/30',
+            'focus-visible:border-ring focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/20',
             'disabled:cursor-not-allowed disabled:opacity-50',
-            error && 'border-destructive focus-visible:ring-destructive',
+            error && 'border-destructive hover:border-destructive focus-visible:border-destructive focus-visible:ring-destructive/20',
             className,
           )}
           {...rest}

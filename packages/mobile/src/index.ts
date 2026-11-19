@@ -11,6 +11,18 @@ export * from './components/Badge';
 export * from './components/Tag';
 export * from './components/StatusPill';
 export * from './components/Input';
+export * from './components/MaskedInput';
+export * from './components/DateField';
+export { applyMask, maskCapacity, unmask } from './lib/mask';
+export {
+  MONTH_NAMES,
+  daysInMonth,
+  formatDateLong,
+  parseIsoDate,
+  toIsoDate,
+  todayIso,
+  type DateParts,
+} from './lib/dates';
 export * from './components/Switch';
 export * from './components/Avatar';
 export * from './components/Spinner';

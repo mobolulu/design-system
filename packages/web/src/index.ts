@@ -16,6 +16,7 @@ export * from './components/Stack';
 export * from './components/Alert';
 export * from './components/Modal';
 export * from './components/Logo';
+export * from './components/Table';
 export * from './components/DataTable';
 export * from './components/Text';
 export * from './components/Skeleton';

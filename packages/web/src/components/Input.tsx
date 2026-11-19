@@ -13,7 +13,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ label, error, hint, leadingIcon, trailingSlot, className, id, ...rest }, ref) => {
     const inputId = id ?? rest.name;
     return (
-      <div className="flex flex-col gap-1.5">
+      <div className="flex flex-col gap-2">
         {label && (
           <label htmlFor={inputId} className="text-sm font-medium text-foreground">
             {label}
@@ -21,7 +21,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
         <div className="relative">
           {leadingIcon && (
-            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground [&>svg]:h-4 [&>svg]:w-4">
+            <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground [&>svg]:h-4 [&>svg]:w-4">
               {leadingIcon}
             </span>
           )}
@@ -29,13 +29,14 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             id={inputId}
             className={cn(
-              'flex h-10 w-full rounded-md border border-input bg-background py-2 text-sm ring-offset-background',
+              'flex h-11 w-full rounded-lg border border-input bg-background py-2 text-sm text-foreground',
               'placeholder:text-muted-foreground',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+              'transition-[border-color,box-shadow] hover:border-foreground/30',
+              'focus-visible:border-ring focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/20',
               'disabled:cursor-not-allowed disabled:opacity-50',
-              leadingIcon ? 'pl-9 pr-3' : 'px-3',
+              leadingIcon ? 'pl-10 pr-3.5' : 'px-3.5',
               trailingSlot && 'pr-11',
-              error && 'border-destructive focus-visible:ring-destructive',
+              error && 'border-destructive hover:border-destructive focus-visible:border-destructive focus-visible:ring-destructive/20',
               className,
             )}
             {...rest}
