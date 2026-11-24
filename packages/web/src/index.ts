@@ -22,5 +22,8 @@ export * from './components/Text';
 export * from './components/Skeleton';
 export * from './components/EmptyState';
 export * from './components/Money';
+export * from './components/ImageGalleryField';
+export * from './components/ColorField';
+export * from './components/IconPickerField';
 export { moboluluPreset } from './tailwind-preset';
 export { default as moboluluPresetDefault } from './tailwind-preset';
