@@ -28,6 +28,11 @@ import {
   SkeletonList,
   EmptyState,
   Money,
+  ImageGalleryField,
+  type GalleryImage,
+  ColorField,
+  IconPickerField,
+  type IconPickerOption,
 } from '@mobolulu/design-system-web';
 
 const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
@@ -72,12 +77,48 @@ const collectorColumns: DataTableColumn<Collector>[] = [
   { key: 'pickups', header: 'Pickups' },
 ];
 
+// ---- sample data for the gallery / colour / icon fields (orchestrator#542) ----
+// The console passes lucide-react icons; any component taking className/style works.
+const glyph = (d: string): IconPickerOption['icon'] =>
+  function Glyph({ className, style }: { className?: string; style?: React.CSSProperties }) {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className={className} style={style} aria-hidden>
+        <path d={d} />
+      </svg>
+    );
+  };
+const sampleIcons: IconPickerOption[] = [
+  { key: 'circle', label: 'Circle', icon: glyph('M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18') },
+  { key: 'check', label: 'Check', icon: glyph('M5 12l5 5L20 7') },
+  { key: 'leaf', label: 'Leaf', icon: glyph('M5 19C5 9 11 4 20 4c0 9-5 15-15 15zM5 19l8-8') },
+  { key: 'drop', label: 'Drop', icon: glyph('M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z') },
+];
+
+/** Stands in for service-attachments: a local object URL, after a short fake progress. */
+function fakeUpload(file: File, { onProgress }: { onProgress: (f: number) => void }) {
+  return new Promise<{ id: string; url: string }>((resolve, reject) => {
+    let done = 0;
+    const timer = setInterval(() => {
+      done += 0.25;
+      onProgress(done);
+      if (done >= 1) {
+        clearInterval(timer);
+        if (file.name.includes('fail')) reject(new Error('demo failure'));
+        else resolve({ id: `${file.name}-${Date.now()}`, url: URL.createObjectURL(file) });
+      }
+    }, 250);
+  });
+}
+
 function WebsiteView() {
   const [modalOpen, setModalOpen] = useState(false);
   const [switchOn, setSwitchOn] = useState(true);
   const [checked, setChecked] = useState(true);
   const [radio, setRadio] = useState('a');
   const [category, setCategory] = useState('kg');
+  const [gallery, setGallery] = useState<GalleryImage[]>([]);
+  const [colour, setColour] = useState('#15803D');
+  const [icon, setIcon] = useState('circle');
 
   return (
     <div>
@@ -141,6 +182,23 @@ function WebsiteView() {
             <Radio value="b" label="Option B" />
           </RadioGroup>
           <Switch label="Available for dispatch" checked={switchOn} onCheckedChange={setSwitchOn} />
+        </VStack>
+      </Section>
+
+      <Section title="Picture gallery, colour and icon fields">
+        <VStack gap={6} className="w-full max-w-3xl">
+          <ImageGalleryField
+            label="Pictures"
+            hint="JPEG, PNG or WebP, up to 5 MB each. Drag to reorder. A file named *fail* shows the retry state."
+            value={gallery}
+            onChange={setGallery}
+            onUpload={fakeUpload}
+            onPreview={(i) => window.open(gallery[i]?.url, '_blank')}
+            maxFileSize={5 * 1024 * 1024}
+            selectableMain
+          />
+          <ColorField label="Colour" value={colour} onChange={setColour} />
+          <IconPickerField label="Icon" options={sampleIcons} value={icon} onChange={setIcon} color={colour} />
         </VStack>
       </Section>
 
